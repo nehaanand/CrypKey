@@ -17,11 +17,14 @@ class _SplashScreenState extends State<MyApp> {
 //    WelcomeScreen.tag: (context) => WelcomeScreen(),
 //  };
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: new Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomPadding: false,   //interaction with view model and livedata,viewmodel,kivedata(mediator,transformers),handling lifecycle,
 //        appBar: AppBar(
 //          title: Text('Registration'),
 //        ),
