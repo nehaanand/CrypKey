@@ -79,9 +79,10 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                     fontStyle: FontStyle.italic),
               )),
               Container(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  height: 500.0,
-                  width: 320.0,
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  margin: EdgeInsets.all(10.0),
+//                  height: 457.0,
+//                  width: 320.0,
                   decoration: new BoxDecoration(
                     color: const Color(0xff77a3c8).withOpacity(0.5),
 //                                  image: new DecorationImage(
@@ -130,7 +131,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                     tabs: tabList),
                               ),
                               new Container(
-                                height: 300.0,
+                                height:450.0,
                                 child: new TabBarView(
                                   controller: _tabController,
 
@@ -139,8 +140,9 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                       new Container(
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
-                                          margin: EdgeInsets.only(top: 30.0),
+                                          margin: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
+
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
@@ -153,12 +155,20 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                     color: Colors.white,
                                                   ),
                                                   hintText: '',
-                                                  prefixIcon: Image.asset(
-                                                      'assets/loc.png'),
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.person,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Username',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
                                                   contentPadding:
                                                       EdgeInsets.all(2),
                                                   //  <- you can it to 0.0 for no space
                                                   border:
+
                                                       new UnderlineInputBorder(
                                                           borderSide:
                                                               new BorderSide(
@@ -170,7 +180,8 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
                                           child: TextFormField(
-                                              keyboardType: TextInputType.text,
+                                            obscureText: true,
+                                              keyboardType: TextInputType.visiblePassword,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
                                                   labelStyle: TextStyle(
@@ -182,8 +193,15 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                     color: Colors.white,
                                                   ),
                                                   hintText: '',
-                                                  prefixIcon: Image.asset(
-                                                      'assets/loc.png'),
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.lock,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Password',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
                                                   contentPadding:
                                                       EdgeInsets.all(2),
                                                   //  <- you can it to 0.0 for no space
@@ -200,7 +218,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                               margin: EdgeInsets.only(
                                                   left: 10.0,
                                                   right: 10.0,
-                                                  top: 40.0),
+                                                  top: 10.0),
                                               child: SizedBox(
                                                   width: double.infinity,
                                                   child: MaterialButton(
@@ -219,9 +237,10 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                     ]),
                                     Column(children: <Widget>[
                                       new Container(
+
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
-                                          margin: EdgeInsets.only(top: 30.0),
+                                          margin: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
@@ -235,8 +254,15 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                     color: Colors.white,
                                                   ),
                                                   hintText: '',
-                                                  prefixIcon: Image.asset(
-                                                      'assets/loc.png'),
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.keyboard,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Name',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
                                                   contentPadding:
                                                       EdgeInsets.all(2),
                                                   //  <- you can it to 0.0 for no space
@@ -246,7 +272,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                               new BorderSide(
                                                     color: Colors.white,
                                                   )),
-                                                  labelText: 'Username'))),
+                                                  labelText: 'Name'))),
                                       Container(
                                           margin: EdgeInsets.only(top: 20.0),
                                           padding: EdgeInsets.only(
@@ -264,8 +290,15 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                     color: Colors.white,
                                                   ),
                                                   hintText: '',
-                                                  prefixIcon: Image.asset(
-                                                      'assets/loc.png'),
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.mail,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Email',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
                                                   contentPadding:
                                                       EdgeInsets.all(2),
                                                   //  <- you can it to 0.0 for no space
@@ -275,14 +308,123 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                               new BorderSide(
                                                     color: Colors.white,
                                                   )),
+                                                  labelText: 'Email'))),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20.0),
+                                          padding: EdgeInsets.only(
+                                              left: 10.0, right: 10.0),
+                                          child: TextFormField(
+                                              keyboardType: TextInputType.text,
+                                              decoration: InputDecoration(
+                                                  alignLabelWithHint: true,
+                                                  labelStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintText: '',
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.phone,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Mobile No.',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
+                                                  contentPadding:
+                                                  EdgeInsets.all(2),
+                                                  //  <- you can it to 0.0 for no space
+                                                  border:
+                                                  new UnderlineInputBorder(
+                                                      borderSide:
+                                                      new BorderSide(
+                                                        color: Colors.white,
+                                                      )),
+                                                  labelText: 'Mobile No.'))),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20.0),
+                                          padding: EdgeInsets.only(
+                                              left: 10.0, right: 10.0),
+                                          child: TextFormField(  obscureText: true,
+                                              keyboardType: TextInputType.visiblePassword,
+                                              decoration: InputDecoration(
+                                                  alignLabelWithHint: true,
+                                                  labelStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintText: '',
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.lock,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Password',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
+                                                  contentPadding:
+                                                  EdgeInsets.all(2),
+                                                  //  <- you can it to 0.0 for no space
+                                                  border:
+                                                  new UnderlineInputBorder(
+                                                      borderSide:
+                                                      new BorderSide(
+                                                        color: Colors.white,
+                                                      )),
                                                   labelText: 'Password'))),
+                                      Container(
+                                          margin: EdgeInsets.only(top: 20.0),
+                                          padding: EdgeInsets.only(
+                                              left: 10.0, right: 10.0),
+                                          child: TextFormField(
+                                            obscureText: true,
+                                              keyboardType: TextInputType.visiblePassword,
+                                              decoration: InputDecoration(
+                                                  alignLabelWithHint: true,
+                                                  labelStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintStyle: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  hintText: '',
+                                                  prefixIcon: Padding(
+                                                    padding: const EdgeInsetsDirectional.only(start: 3.0,top:8.0),
+                                                    child: Icon(
+                                                      Icons.lock,
+                                                      color: Colors.white,
+                                                      size: 24.0,
+                                                      semanticLabel: 'Confirm Password',
+                                                    ), // myIcon is a 48px-wide widget.
+                                                  ),
+                                                  contentPadding:
+                                                  EdgeInsets.all(2),
+                                                  //  <- you can it to 0.0 for no space
+                                                  border:
+                                                  new UnderlineInputBorder(
+                                                      borderSide:
+                                                      new BorderSide(
+                                                        color: Colors.white,
+                                                      )),
+                                                  labelText: 'Confirm Password'))),
                                       Builder(
                                           builder: (context) => Container(
                                               height: 50.0,
                                               margin: EdgeInsets.only(
                                                   left: 10.0,
                                                   right: 10.0,
-                                                  top: 40.0),
+                                                  top: 10.0),
                                               child: SizedBox(
                                                   width: double.infinity,
                                                   child: MaterialButton(
