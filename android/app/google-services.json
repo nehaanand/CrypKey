@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "963191656845",
+    "firebase_url": "https://crypkey-24682.firebaseio.com",
+    "project_id": "crypkey-24682",
+    "storage_bucket": "crypkey-24682.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963191656845:android:a44cdf0b70f01728d0edc4",
+        "android_client_info": {
+          "package_name": "neha.flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963191656845-lm6em6hjhqu74bkk60t8jc5j7bm2h24p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVMJmY909MHwRIhJKP678FFs1JAzReNwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963191656845-lm6em6hjhqu74bkk60t8jc5j7bm2h24p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

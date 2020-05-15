@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 
 class Login1 extends StatefulWidget {
+  final databaseReference = FirebaseDatabase.instance.reference();
+
   static String tag = 'login1-page';
   final routes = <String, WidgetBuilder>{
 //    NavigationDrawerDemo.tag: (context) => NavigationDrawerDemo(),
@@ -20,19 +24,13 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
 
   String privacy_policy_url, termsandconditionsurl;
   List SuppAppDashboardList = [];
-  TextEditingController row_1_title = new TextEditingController();
-  TextEditingController row_2_title = new TextEditingController();
-  TextEditingController row_3_title = new TextEditingController();
-
-  TextEditingController box_11_title = new TextEditingController();
-  TextEditingController box_12_title = new TextEditingController();
-  TextEditingController box_13_title = new TextEditingController();
-
-  TextEditingController box_11_value = new TextEditingController();
-  TextEditingController box_12_value = new TextEditingController();
-  TextEditingController box_13_value = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController mobileController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
 
   double height = 0.0, width = 0.0;
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   @override
   void initState() {
@@ -52,6 +50,15 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  void createRecord(){
+    databaseReference.child(mobileController.text).set({
+      'name': nameController.text,
+      'email': emailController.text,
+      'mobileno': mobileController.text,
+      'password': passwordController.text,
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -242,6 +249,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                               left: 10.0, right: 10.0),
                                           margin: EdgeInsets.only(top: 10.0),
                                           child: TextFormField(
+                                              controller: nameController,
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
@@ -278,6 +286,8 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
                                           child: TextFormField(
+                                              controller: emailController,
+
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
@@ -314,6 +324,8 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
                                           child: TextFormField(
+                                              controller: mobileController,
+
                                               keyboardType: TextInputType.text,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
@@ -349,7 +361,8 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                           margin: EdgeInsets.only(top: 20.0),
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
-                                          child: TextFormField(  obscureText: true,
+                                          child: TextFormField(
+                                              obscureText: true,
                                               keyboardType: TextInputType.visiblePassword,
                                               decoration: InputDecoration(
                                                   alignLabelWithHint: true,
@@ -386,9 +399,11 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                           padding: EdgeInsets.only(
                                               left: 10.0, right: 10.0),
                                           child: TextFormField(
+                                            controller: passwordController,
                                             obscureText: true,
                                               keyboardType: TextInputType.visiblePassword,
                                               decoration: InputDecoration(
+
                                                   alignLabelWithHint: true,
                                                   labelStyle: TextStyle(
                                                     fontSize: 17.0,
@@ -431,13 +446,14 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                     color:
                                                         const Color(0xFF729dc0),
                                                     child: new Text(
-                                                      'Sign In',
+                                                      'Sign Up',
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 16.0),
                                                     ),
                                                     onPressed: () async {
-                                                      setState(() {});
+
+                                                      createRecord();
                                                     },
                                                   ))))
                                     ]),
