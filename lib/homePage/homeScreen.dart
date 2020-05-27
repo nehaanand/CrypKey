@@ -1,21 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/firstscreen.dart';
 import 'package:flutter_app/firstscreenwithtabs.dart';
 
-class SplashScreenPage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static String tag = 'splash-page';
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreenPage> {
+class _HomeScreenState extends State<HomeScreen> {
   // bool _load = false;
 
   final routes = <String, WidgetBuilder>{
-    Login.tag: (context) => Login(),
-    Login1.tag: (context) => Login1(),
+    HomeScreen.tag: (context) => HomeScreen(),
   };
 
 
@@ -28,7 +26,7 @@ class _SplashScreenState extends State<SplashScreenPage> {
       home: new Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          title: Text('Registration'),
+          title: Text('Home Screen'),
         ),
         body: Builder(
           builder: (context) => new Container(
@@ -50,13 +48,6 @@ class _SplashScreenState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
-    new Future.delayed(const Duration(seconds: 3), () {
-      // Navigator.of(context)
-      //   ..pop()
-      //   ..pushNamed(/WelcomeScreen.tag);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (BuildContext context) => new Login1()));
 
-    });
   }
 }

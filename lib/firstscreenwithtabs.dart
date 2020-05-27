@@ -6,12 +6,17 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/homePage/homeScreen.dart';
+import 'package:flutter_app/coinList/coinList.dart';
 
 class Login1 extends StatefulWidget {
   final databaseReference = Firestore.instance;
 
   static String tag = 'login1-page';
   final routes = <String, WidgetBuilder>{
+
+    HomeScreen.tag: (context) => HomeScreen(),
+    CoinList.tag: (context) => CoinList(),
 //    NavigationDrawerDemo.tag: (context) => NavigationDrawerDemo(),
   };
 
@@ -132,7 +137,11 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                     timeInSecForIosWeb: 3,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 14.0);
+                    fontSize: 14.0).then((value){
+                  Navigator.of(context).pushReplacement(
+                      new MaterialPageRoute(builder: (BuildContext context) => new CoinList()));
+                });
+
               });
             }
           });
