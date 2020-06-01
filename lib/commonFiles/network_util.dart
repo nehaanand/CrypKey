@@ -14,17 +14,32 @@ class NetworkUtil {
 
   final JsonDecoder _decoder = new JsonDecoder();
 
-  Future<dynamic> get(String uri) {
-    return http.get(Uri.encodeFull(uri), headers: {
-      HttpHeaders.contentTypeHeader: "application/json;charset=utf-8"
-    }).then((http.Response response) {
+//  Future<dynamic> get(String uri) async {
+//    try {
+//      return await http.get(Uri.encodeFull(uri)).then((http.Response response) {
+//        final String res = response.body;
+//        final int statusCode = response.statusCode;
+//
+//        if (statusCode < 200 || statusCode > 400 || json == null) {
+//          throw new Exception("Error while fetching data");
+//        }
+//
+//        return _decoder.convert(res);
+//      });
+//    }
+//    catch(error){
+//      print(error.toString());
+//    }
+//  }
+  Future<dynamic> get(String url) {
+    return http.get(Uri.encodeFull(url)).then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
+      print(response.body.runtimeType);
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
       }
-
       return _decoder.convert(res);
     });
   }

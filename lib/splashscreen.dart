@@ -2,6 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/firstscreen.dart';
 import 'package:flutter_app/firstscreenwithtabs.dart';
+import 'package:flutter_app/presenter/presenter.dart';
+import 'package:flutter_app/homePage/modelHomePage.dart';
+import 'package:flutter_app/database_helper.dart';
+
 
 class SplashScreenPage extends StatefulWidget {
   static String tag = 'splash-page';
@@ -10,7 +14,11 @@ class SplashScreenPage extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreenPage> {
+class _SplashScreenState extends State<SplashScreenPage> implements ScreenContract  {
+  var currentDateTime=0;
+  var coinListInsertionDateTime=0;
+  bool _loded = false;
+  DatabaseHelper dbCon = new DatabaseHelper();
   // bool _load = false;
 
   final routes = <String, WidgetBuilder>{
@@ -50,13 +58,55 @@ class _SplashScreenState extends State<SplashScreenPage> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      ScreenPrsenter _presenter;
+
+      _presenter = new ScreenPrsenter(this);
+
+      _presenter.coinsList();
+    });
+
+    currentDateTime=new DateTime.now().millisecondsSinceEpoch;
+    print(currentDateTime);
+
+
     new Future.delayed(const Duration(seconds: 3), () {
-      // Navigator.of(context)
-      //   ..pop()
-      //   ..pushNamed(/WelcomeScreen.tag);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (BuildContext context) => new Login1()));
+
+//      Navigator.of(context).pushReplacement(
+//          new MaterialPageRoute(builder: (BuildContext context) => new Login1()));
 
     });
+  }
+
+  @override
+  void onLoginSuccess(ModelHomePage user) {
+
+  }
+
+  @override
+  void onApiErrorCoinsList(String errorTxt) {
+
+  }
+
+  @override
+  void onApiSuccessCoinsList(List coins) {
+    _loded = true;
+
+
+      dbCon.syncCoinData(coins).then((value){
+        print("success " + dbCon.getCoinsData().toString().length.toString());
+
+        coinListInsertionDateTime=new DateTime.now().millisecondsSinceEpoch;
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (BuildContext context) => new Login1()));
+      });
+
+
+
+  }
+
+  @override
+  void onLoginError(String errorTxt) {
+
   }
 }

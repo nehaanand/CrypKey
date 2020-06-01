@@ -1014,6 +1014,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                 decoration: new BoxDecoration(
                   color: const Color(0xff7c94b6),
                   image: new DecorationImage(
+
                     fit: BoxFit.cover,
 //                            colorFilter: new ColorFilter.mode(
 //                                Colors.black.withOpacity(0.02),

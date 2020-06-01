@@ -11,7 +11,7 @@ abstract class ScreenContract {
 
   void onLoginError(String errorTxt);
 
-  void onApiSuccessCoinsList(ModelCoinsList user);
+  void onApiSuccessCoinsList(List user);
 
   void onApiErrorCoinsList(String errorTxt);
 
@@ -42,6 +42,7 @@ class ScreenPrsenter {
       var user = await api.coinslist();
       _view.onApiSuccessCoinsList(user);
     } on Exception catch(error) {
+      print(error);
       _view.onApiErrorCoinsList(error.toString());
     }
 

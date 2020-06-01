@@ -37,8 +37,7 @@ class MobileRestDatasource {
     }
   }
 
-  Future<ModelCoinsList> coinslist() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<List> coinslist() async {
     try {
       var url = Uri(
           scheme: 'https',
@@ -51,12 +50,13 @@ class MobileRestDatasource {
           .get(url1)
           .then((dynamic res) {
 
-            print("Reqsponse"+res);
-//        if (res["objAppResultStatus"]["STATUS"] == "VALIDATION" ||
-//            res["objAppResultStatus"]["STATUS"] == "ERROR") {
-//          throw new Exception(res["objAppResultStatus"]["MESSAGE"]);
-//        } else {
-          return new ModelCoinsList.fromJson(res);
+      List<dynamic> list = [];
+        for(var i =0; i<res.length;i++){
+          list.add(new ModelCoinsList.fromJson(res[i]));
+        }
+
+
+        return list ;
 //        }
       });
     } catch (error) {
