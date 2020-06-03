@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -7,6 +8,7 @@ import 'package:flutter_app/commonFiles/network_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/coinList/model/modelCoinsList.dart';
+import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
 
 class MobileRestDatasource {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -58,6 +60,30 @@ class MobileRestDatasource {
 
         return list ;
 //        }
+      });
+    } catch (error) {
+      print("abccc" + error);
+    }
+  }
+  Future<ModelCoinDetails> coinsDetails(String coinID) async {
+    try {
+      var url = Uri(
+          scheme: 'https',
+          host: 'api.coingecko.com',
+          path: 'api/v3/coins/'+coinID);
+
+      var url1 = Uri.decodeComponent(url.toString());
+
+      return _netUtil
+          .get(url1)
+          .then((dynamic res) {
+//
+//        List<dynamic> list = [];
+//        for(var i =0; i<res.length;i++){
+//          list.add(new ModelCoinDetails.fromJson(res[i]));
+//        }
+        return ModelCoinDetails.fromJson(res) ;
+
       });
     } catch (error) {
       print("abccc" + error);

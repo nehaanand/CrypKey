@@ -56,17 +56,6 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-//    List<Map<String, IconData>> _categories = [
-//      {
-//        'name': 'Sports',
-//        'icon': Icons.lock_outline,
-//      },
-//      {
-//        'name': 'Politics',
-//        'icon': Icons.lock_open,
-//      },
-//
-//    ];
 
     tabList.add(new Tab(
       text: 'SIGN IN',
@@ -95,11 +84,9 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
 
   void validateAndSave() {
     if (_formKey1.currentState.validate()) {
-//    If all data are correct then save data to out variables
       _formKey1.currentState.save();
       createRecord();
     } else {
-//    If all data are not valid then start auto validation.
       setState(() {
         _autoValidate = true;
       });
@@ -147,40 +134,6 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
           });
 
 
-
-//      _formKey2.currentState.save();
-//      String encdata = generateMd5(password);
-//
-//      databaseReference
-//          .collection("Users")
-//          .where("username", isEqualTo: username)
-//          .where("password", isEqualTo: encdata)
-//          .getDocuments()
-//          .then((value) {
-//        if (value.documents.length==0) {
-//          Fluttertoast.showToast(
-//              msg: "Invalid Credentials",
-//              toastLength: Toast.LENGTH_LONG,
-//              gravity: ToastGravity.BOTTOM,
-//              timeInSecForIosWeb: 3,
-//              backgroundColor: Colors.black,
-//              textColor: Colors.white,
-//              fontSize: 14.0);
-//        }
-//        else {
-//          value.documents.forEach((result) {
-//              Fluttertoast.showToast(
-//                  msg: "Login Successful",
-//                  toastLength: Toast.LENGTH_LONG,
-//                  gravity: ToastGravity.BOTTOM,
-//                  timeInSecForIosWeb: 3,
-//                  backgroundColor: Colors.black,
-//                  textColor: Colors.white,
-//                  fontSize: 14.0);
-//
-//          });
-//        }
-//        });
     } else {
       setState(() {
         _autoValidate = true;
@@ -272,32 +225,9 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
 //                  width: 320.0,
                       decoration: new BoxDecoration(
                         color: const Color(0xff77a3c8).withOpacity(0.5),
-//                                  image: new DecorationImage(
-//                                    fit: BoxFit.cover,
-//                                    colorFilter: new ColorFilter.mode(
-//                                        Colors.black.withOpacity(0.1),
-//                                        BlendMode.dstATop),
-//                                    image: AssetImage('assets/background.jpeg'),
-//                                  ),
                       ),
                       child: Column(
                         children: <Widget>[
-//                        Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          children: <Widget>[
-//                            Text(
-//                              "CrypKey",
-//                              textAlign: TextAlign.center,
-//                              style: TextStyle(
-//                                  fontSize: 22.0,
-//                                  color: Colors.white,
-//                                  fontStyle: FontStyle.italic),
-//                            ),
-//                          ],
-//                        ),
-//                      new Positioned(
-//                        top: 310,
-//                        child:
                           new Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: new Column(
@@ -306,8 +236,6 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                   decoration: new BoxDecoration(
                                     color: Colors.transparent,
                                   ),
-//                                color: const Color(0xff77a3c8).withOpacity(0.5),
-//                                  color: Theme.of(context).primaryColor),
                                   child: new TabBar(
                                       controller: _tabController,
                                       indicatorColor: Colors.white,
@@ -863,152 +791,20 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                                         emailController
                                                                             .text);
 
-//                                                    if (emailController.text.length ==
-//                                                        0) {
-//                                                      String error = "Email Can't be empty";
-//
-//                                                      scaffoldKey.currentState.showSnackBar(
-//                                                          new SnackBar(
-//                                                              duration:
-//                                                              const Duration(milliseconds: 500),
-//                                                              content: new Text(error)));
-//
-//                                                    } else if (!isvalid) {
-//                                                      Fluttertoast.showToast(
-//                                                          msg: "Invalid Email",
-//                                                          toastLength: Toast.LENGTH_LONG,
-//                                                          gravity: ToastGravity.BOTTOM,
-//                                                          timeInSecForIosWeb: 3,
-//                                                          backgroundColor: Colors.black,
-//                                                          textColor: Colors.white,
-//                                                          fontSize: 14.0);
-//                                                    }
-//                                                    else
-//                                                    createRecord();v
                                                             validateAndSave();
                                                           },
                                                         ))))
                                           ])),
                                     ],
-//                            children: tabList.map((Tab tab) {
-//                              _getPage(tab);
-//                            }).toList(),
+
                                   ),
                                 )
                               ],
                             ),
                           ),
 
-//                                  Row(
-//                                    mainAxisAlignment:
-//                                    MainAxisAlignment.spaceEvenly,
-//                                    children: <Widget>[
-//                                      Container(
-//                                          padding: EdgeInsets.fromLTRB(
-//                                              0, 20, 0, 0),
-//                                          child: Text(
-//                                            "SIGN IN",
-//                                            textAlign: TextAlign.center,
-//                                            style: TextStyle(
-//                                                fontSize: 22.0,
-//                                                color: Colors.white,
-//                                                fontStyle: FontStyle.italic),
-//                                          )),
-//                                      Container(
-//                                          padding: EdgeInsets.fromLTRB(
-//                                              0, 20, 0, 0),
-//                                          child: Text(
-//                                            "SIGN UP",
-//                                            textAlign: TextAlign.center,
-//                                            style: TextStyle(
-//                                                fontSize: 22.0,
-//                                                color: Colors.white,
-//                                                fontStyle: FontStyle.italic),
-//                                          )),
-//                                    ],
-//                                  ),
-//                            Container(
-//                                margin: EdgeInsets.only(top: 70.0),
-//                                padding: EdgeInsets.all(10.0),
-//                                child: TextFormField(
-//                                    keyboardType: TextInputType.text,
-//                                    decoration: InputDecoration(
-//                                        alignLabelWithHint: true,
-//                                        labelStyle: TextStyle(
-//                                          fontSize: 17.0,
-//                                          color:Colors.white,
-//                                        ),
-//                                        hintStyle: TextStyle(
-//                                          fontSize: 17.0,
-//                                          color:Colors.white,
-//                                        ),
-//                                        hintText: '',
-//                                        prefixIcon: Image.asset(
-//                                            'assets/loc.png'),
-//                                        contentPadding:
-//                                        EdgeInsets.all(2),
-//                                        //  <- you can it to 0.0 for no space
-//                                        border: new UnderlineInputBorder(
-//                                            borderSide: new BorderSide(
-//                                              color:Colors.white,
-//                                            )),
-//                                        labelText: 'Username'))),
-//                            Container(
-//                                margin: EdgeInsets.only(top: 20.0),
-//                                padding: EdgeInsets.only(left:10.0,right: 10.0),
-//                                child: TextFormField(
-//                                    keyboardType: TextInputType.text,
-//                                    decoration: InputDecoration(
-//                                        alignLabelWithHint: true,
-//                                        labelStyle: TextStyle(
-//                                          fontSize: 17.0,
-//                                          color:Colors.white,
-//                                        ),
-//                                        hintStyle: TextStyle(
-//                                          fontSize: 17.0,
-//                                          color:Colors.white,
-//                                        ),
-//                                        hintText: '',
-//                                        prefixIcon: Image.asset(
-//                                            'assets/loc.png'),
-//                                        contentPadding:
-//                                        EdgeInsets.all(2),
-//                                        //  <- you can it to 0.0 for no space
-//                                        border: new UnderlineInputBorder(
-//                                            borderSide: new BorderSide(
-//                                              color:Colors.white,
-//                                            )),
-//                                        labelText: 'Password'))),
-
-//                        Builder(
-//                            builder: (context) => Container(
-//                                height: 50.0,
-//                                margin: EdgeInsets.only(
-//                                    left: 10.0, right: 10.0, top: 40.0),
-//                                child: SizedBox(
-//                                    width: double.infinity,
-//                                    child: MaterialButton(
-//                                      color: const Color(0xFF729dc0),
-//                                      child: new Text(
-//                                        'Sign In',
-//                                        style: TextStyle(
-//                                            color: Colors.white,
-//                                            fontSize: 16.0),
-//                                      ),
-//                                      onPressed: () async {
-//                                        setState(() {});
-//                                      },
-//                                    ))))
                         ],
                       )
-
-//                              child: Text(
-//                              "CrypKey",
-//                              textAlign: TextAlign.center,
-//
-//                              style: TextStyle(fontSize: 22.0, color: Colors.white,fontStyle:FontStyle.italic),
-//                            ),
-
                       )
                 ]))),
                 decoration: new BoxDecoration(
@@ -1016,380 +812,13 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                   image: new DecorationImage(
 
                     fit: BoxFit.cover,
-//                            colorFilter: new ColorFilter.mode(
-//                                Colors.black.withOpacity(0.02),
-//                                BlendMode.dstATop),
                     image: AssetImage('assets/sample.gif'),
 
-//                            image: new NetworkImage(
-//                              'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
-//                            ),
                   ),
                 ),
               ),
             ),
           ),
         ));
-
-//    return new MaterialApp(
-//      title: 'msc',
-//      home: new DefaultTabController(
-//        length: 2,
-//        child: new Scaffold(
-//
-//          body: new TabBarView(
-//            children: <Widget>[
-//              new Column(
-//                children: <Widget>[
-//
-//                  new Card(
-//                    child: new Container(
-//                      height: MediaQuery.of(context).size.height,
-//                      margin: EdgeInsets.only(top: 20.0),
-//                      child: new Center(
-//                          child: Container(
-//                              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-//                              height: 500.0,
-//                              width: 320.0,
-//                              decoration: new BoxDecoration(
-//                                color: const Color(0xff77a3c8).withOpacity(0.5),
-////                                  image: new DecorationImage(
-////                                    fit: BoxFit.cover,
-////                                    colorFilter: new ColorFilter.mode(
-////                                        Colors.black.withOpacity(0.1),
-////                                        BlendMode.dstATop),
-////                                    image: AssetImage('assets/background.jpeg'),
-////                                  ),
-//                              ),
-//                              child: Column(
-//                                children: <Widget>[
-//                                  Row(
-//                                    mainAxisAlignment:
-//                                    MainAxisAlignment.center,
-//                                    children: <Widget>[
-//                                      Text(
-//                                        "CrypKey",
-//                                        textAlign: TextAlign.center,
-//                                        style: TextStyle(
-//                                            fontSize: 22.0,
-//                                            color: Colors.white,
-//                                            fontStyle: FontStyle.italic),
-//                                      ),
-//                                    ],
-//                                  ),
-//                                  new TabBar(
-//                                    tabs: [
-//                                      new Text("SIGN IN"),
-//                                      new Text("SIGN UP")
-//                                    ],
-//                                  ),
-////                                  Row(
-////                                    mainAxisAlignment:
-////                                    MainAxisAlignment.spaceEvenly,
-////                                    children: <Widget>[
-////                                      Container(
-////                                          padding: EdgeInsets.fromLTRB(
-////                                              0, 20, 0, 0),
-////                                          child: Text(
-////                                            "SIGN IN",
-////                                            textAlign: TextAlign.center,
-////                                            style: TextStyle(
-////                                                fontSize: 22.0,
-////                                                color: Colors.white,
-////                                                fontStyle: FontStyle.italic),
-////                                          )),
-////                                      Container(
-////                                          padding: EdgeInsets.fromLTRB(
-////                                              0, 20, 0, 0),
-////                                          child: Text(
-////                                            "SIGN UP",
-////                                            textAlign: TextAlign.center,
-////                                            style: TextStyle(
-////                                                fontSize: 22.0,
-////                                                color: Colors.white,
-////                                                fontStyle: FontStyle.italic),
-////                                          )),
-////                                    ],
-////                                  ),
-//                                  Container(
-//                                      margin: EdgeInsets.only(top: 70.0),
-//                                      padding: EdgeInsets.all(10.0),
-//                                      child: TextFormField(
-//                                          keyboardType: TextInputType.text,
-//                                          decoration: InputDecoration(
-//                                              alignLabelWithHint: true,
-//                                              labelStyle: TextStyle(
-//                                                fontSize: 17.0,
-//                                                color:Colors.white,
-//                                              ),
-//                                              hintStyle: TextStyle(
-//                                                fontSize: 17.0,
-//                                                color:Colors.white,
-//                                              ),
-//                                              hintText: '',
-//                                              prefixIcon: Image.asset(
-//                                                  'assets/loc.png'),
-//                                              contentPadding:
-//                                              EdgeInsets.all(2),
-//                                              //  <- you can it to 0.0 for no space
-//                                              border: new UnderlineInputBorder(
-//                                                  borderSide: new BorderSide(
-//                                                    color:Colors.white,
-//                                                  )),
-//                                              labelText: 'Username'))),
-//                                  Container(
-//                                      margin: EdgeInsets.only(top: 20.0),
-//                                      padding: EdgeInsets.only(left:10.0,right: 10.0),
-//                                      child: TextFormField(
-//                                          keyboardType: TextInputType.text,
-//                                          decoration: InputDecoration(
-//                                              alignLabelWithHint: true,
-//                                              labelStyle: TextStyle(
-//                                                fontSize: 17.0,
-//                                                color:Colors.white,
-//                                              ),
-//                                              hintStyle: TextStyle(
-//                                                fontSize: 17.0,
-//                                                color:Colors.white,
-//                                              ),
-//                                              hintText: '',
-//                                              prefixIcon: Image.asset(
-//                                                  'assets/loc.png'),
-//                                              contentPadding:
-//                                              EdgeInsets.all(2),
-//                                              //  <- you can it to 0.0 for no space
-//                                              border: new UnderlineInputBorder(
-//                                                  borderSide: new BorderSide(
-//                                                    color:Colors.white,
-//                                                  )),
-//                                              labelText: 'Password'))),
-//
-//                                  Builder(
-//                                      builder: (context) => Container(
-//                                          height: 50.0,
-//                                          margin: EdgeInsets.only(
-//                                              left: 10.0, right: 10.0, top: 40.0),
-//                                          child: SizedBox(
-//                                              width: double.infinity,
-//                                              child: MaterialButton(
-//                                                color: const Color(0xFF729dc0),
-//                                                child: new Text(
-//                                                  'Sign In',
-//                                                  style: TextStyle(
-//                                                      color: Colors.white, fontSize: 16.0),
-//                                                ),
-//                                                onPressed: () async {
-//
-//                                                  setState(() {
-//
-//                                                  });
-//                                                },
-//                                              ))))
-//                                ],
-//                              )
-//
-////                              child: Text(
-////                              "CrypKey",
-////                              textAlign: TextAlign.center,
-////
-////                              style: TextStyle(fontSize: 22.0, color: Colors.white,fontStyle:FontStyle.italic),
-////                            ),
-//
-//                          )),
-//                      decoration: new BoxDecoration(
-//                        color: const Color(0xff7c94b6),
-//                        image: new DecorationImage(
-//                          fit: BoxFit.cover,
-////                            colorFilter: new ColorFilter.mode(
-////                                Colors.black.withOpacity(0.02),
-////                                BlendMode.dstATop),
-//                          image: AssetImage('assets/sample.gif'),
-//
-////                            image: new NetworkImage(
-////                              'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
-////                            ),
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//              new Column(
-//                children: <Widget>[ new Card(
-//                  child: new Container(
-//                    height: MediaQuery.of(context).size.height,
-//                    margin: EdgeInsets.only(top: 20.0),
-//                    child: new Center(
-//                        child: Container(
-//                            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-//                            height: 500.0,
-//                            width: 320.0,
-//                            decoration: new BoxDecoration(
-//                              color: const Color(0xff77a3c8).withOpacity(0.5),
-////                                  image: new DecorationImage(
-////                                    fit: BoxFit.cover,
-////                                    colorFilter: new ColorFilter.mode(
-////                                        Colors.black.withOpacity(0.1),
-////                                        BlendMode.dstATop),
-////                                    image: AssetImage('assets/background.jpeg'),
-////                                  ),
-//                            ),
-//                            child: Column(
-//                              children: <Widget>[
-//                                Row(
-//                                  mainAxisAlignment:
-//                                  MainAxisAlignment.center,
-//                                  children: <Widget>[
-//                                    Text(
-//                                      "CrypKey",
-//                                      textAlign: TextAlign.center,
-//                                      style: TextStyle(
-//                                          fontSize: 22.0,
-//                                          color: Colors.white,
-//                                          fontStyle: FontStyle.italic),
-//                                    ),
-//                                  ],
-//                                ),
-//                                new TabBar(
-//                                  tabs: [
-//                                    new Text("SIGN IN"),
-//                                    new Text("SIGN UP")
-//                                  ],
-//                                ),
-////                                  Row(
-////                                    mainAxisAlignment:
-////                                    MainAxisAlignment.spaceEvenly,
-////                                    children: <Widget>[
-////                                      Container(
-////                                          padding: EdgeInsets.fromLTRB(
-////                                              0, 20, 0, 0),
-////                                          child: Text(
-////                                            "SIGN IN",
-////                                            textAlign: TextAlign.center,
-////                                            style: TextStyle(
-////                                                fontSize: 22.0,
-////                                                color: Colors.white,
-////                                                fontStyle: FontStyle.italic),
-////                                          )),
-////                                      Container(
-////                                          padding: EdgeInsets.fromLTRB(
-////                                              0, 20, 0, 0),
-////                                          child: Text(
-////                                            "SIGN UP",
-////                                            textAlign: TextAlign.center,
-////                                            style: TextStyle(
-////                                                fontSize: 22.0,
-////                                                color: Colors.white,
-////                                                fontStyle: FontStyle.italic),
-////                                          )),
-////                                    ],
-////                                  ),
-//                                Container(
-//                                    margin: EdgeInsets.only(top: 70.0),
-//                                    padding: EdgeInsets.all(10.0),
-//                                    child: TextFormField(
-//                                        keyboardType: TextInputType.text,
-//                                        decoration: InputDecoration(
-//                                            alignLabelWithHint: true,
-//                                            labelStyle: TextStyle(
-//                                              fontSize: 17.0,
-//                                              color:Colors.white,
-//                                            ),
-//                                            hintStyle: TextStyle(
-//                                              fontSize: 17.0,
-//                                              color:Colors.white,
-//                                            ),
-//                                            hintText: '',
-//                                            prefixIcon: Image.asset(
-//                                                'assets/loc.png'),
-//                                            contentPadding:
-//                                            EdgeInsets.all(2),
-//                                            //  <- you can it to 0.0 for no space
-//                                            border: new UnderlineInputBorder(
-//                                                borderSide: new BorderSide(
-//                                                  color:Colors.white,
-//                                                )),
-//                                            labelText: 'Username'))),
-//                                Container(
-//                                    margin: EdgeInsets.only(top: 20.0),
-//                                    padding: EdgeInsets.only(left:10.0,right: 10.0),
-//                                    child: TextFormField(
-//                                        keyboardType: TextInputType.text,
-//                                        decoration: InputDecoration(
-//                                            alignLabelWithHint: true,
-//                                            labelStyle: TextStyle(
-//                                              fontSize: 17.0,
-//                                              color:Colors.white,
-//                                            ),
-//                                            hintStyle: TextStyle(
-//                                              fontSize: 17.0,
-//                                              color:Colors.white,
-//                                            ),
-//                                            hintText: '',
-//                                            prefixIcon: Image.asset(
-//                                                'assets/loc.png'),
-//                                            contentPadding:
-//                                            EdgeInsets.all(2),
-//                                            //  <- you can it to 0.0 for no space
-//                                            border: new UnderlineInputBorder(
-//                                                borderSide: new BorderSide(
-//                                                  color:Colors.white,
-//                                                )),
-//                                            labelText: 'Password'))),
-//
-//                                Builder(
-//                                    builder: (context) => Container(
-//                                        height: 50.0,
-//                                        margin: EdgeInsets.only(
-//                                            left: 10.0, right: 10.0, top: 40.0),
-//                                        child: SizedBox(
-//                                            width: double.infinity,
-//                                            child: MaterialButton(
-//                                              color: const Color(0xFF729dc0),
-//                                              child: new Text(
-//                                                'Sign In',
-//                                                style: TextStyle(
-//                                                    color: Colors.white, fontSize: 16.0),
-//                                              ),
-//                                              onPressed: () async {
-//
-//                                                setState(() {
-//
-//                                                });
-//                                              },
-//                                            ))))
-//                              ],
-//                            )
-//
-////                              child: Text(
-////                              "CrypKey",
-////                              textAlign: TextAlign.center,
-////
-////                              style: TextStyle(fontSize: 22.0, color: Colors.white,fontStyle:FontStyle.italic),
-////                            ),
-//
-//                        )),
-//                    decoration: new BoxDecoration(
-//                      color: const Color(0xff7c94b6),
-//                      image: new DecorationImage(
-//                        fit: BoxFit.cover,
-////                            colorFilter: new ColorFilter.mode(
-////                                Colors.black.withOpacity(0.02),
-////                                BlendMode.dstATop),
-//                        image: AssetImage('assets/sample.gif'),
-//
-////                            image: new NetworkImage(
-////                              'http://www.allwhitebackground.com/images/2/2582-190x190.jpg',
-////                            ),
-//                      ),
-//                    ),
-//                  ),
-//                ),],
-//              )
-//            ],
-//          ),
-//        ),
-//      ),
-//    );
   }
 }

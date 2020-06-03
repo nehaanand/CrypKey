@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/firstscreen.dart';
-import 'package:flutter_app/firstscreenwithtabs.dart';
+import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
+import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/loginRegister.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/database_helper.dart';
@@ -22,7 +22,6 @@ class _SplashScreenState extends State<SplashScreenPage> implements ScreenContra
   // bool _load = false;
 
   final routes = <String, WidgetBuilder>{
-    Login.tag: (context) => Login(),
     Login1.tag: (context) => Login1(),
   };
 
@@ -92,9 +91,8 @@ class _SplashScreenState extends State<SplashScreenPage> implements ScreenContra
   void onApiSuccessCoinsList(List coins) {
     _loded = true;
 
-
+//
       dbCon.syncCoinData(coins).then((value){
-        print("success " + dbCon.getCoinsData().toString().length.toString());
 
         coinListInsertionDateTime=new DateTime.now().millisecondsSinceEpoch;
       Navigator.of(context).pushReplacement(
@@ -107,6 +105,15 @@ class _SplashScreenState extends State<SplashScreenPage> implements ScreenContra
 
   @override
   void onLoginError(String errorTxt) {
+
+  }
+
+  @override
+  void onApiSuccessCoinDetails(ModelCoinDetails coindetails) {
+  }
+
+  @override
+  void onApiErrorCoinsDetails(String errorTxt) {
 
   }
 }

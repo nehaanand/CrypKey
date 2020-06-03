@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/firstscreen.dart';
 import 'dart:async';
-import 'package:flutter_app/splashscreen.dart';
+import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/splashscreen.dart';
 
 void main() => runApp(MyApp());
 

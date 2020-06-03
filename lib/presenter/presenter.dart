@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/coinList/model/modelCoinsList.dart';
@@ -11,11 +12,11 @@ abstract class ScreenContract {
 
   void onLoginError(String errorTxt);
 
-  void onApiSuccessCoinsList(List user);
+  void onApiSuccessCoinsList(List coins);
+  void onApiSuccessCoinDetails(ModelCoinDetails coindetails);
 
   void onApiErrorCoinsList(String errorTxt);
-
-
+  void onApiErrorCoinsDetails(String errorTxt);
 }
 
 class ScreenPrsenter {
@@ -32,9 +33,7 @@ class ScreenPrsenter {
     } on Exception catch(error) {
       _view.onLoginError(error.toString());
     }
-
   }
-
 
   coinsList() async {
     try {
@@ -45,7 +44,17 @@ class ScreenPrsenter {
       print(error);
       _view.onApiErrorCoinsList(error.toString());
     }
+  }
 
+  coinsDetails(String coinID) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var coindetails = await api.coinsDetails(coinID);
+      _view.onApiSuccessCoinDetails(coindetails);
+    } on Exception catch(error) {
+      print(error);
+      _view.onApiErrorCoinsDetails(error.toString());
+    }
   }
 
 }
