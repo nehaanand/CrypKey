@@ -4,6 +4,7 @@ import 'package:flutter_app/database_helper.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/coinDetails/coinDetails.dart';
+import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
 
 class CoinList extends StatefulWidget {
   static String tag = 'splash-page';
@@ -394,6 +395,16 @@ class _CoinListState extends State<CoinList> implements ScreenContract {
 
   @override
   void onApiErrorCoinsDetails(String errorTxt) {}
+
+  @override
+  void onApiSuccessMarketChart(ModelMarketChart coindetails) {
+
+  }
+
+  @override
+  void onApiErrorMarketChart(String errorTxt) {
+
+  }
 
 //  @override
 //  void onLoginSuccess(String errorTxt) {

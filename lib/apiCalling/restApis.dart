@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
+import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:convert';
@@ -83,6 +84,25 @@ class MobileRestDatasource {
 //          list.add(new ModelCoinDetails.fromJson(res[i]));
 //        }
         return ModelCoinDetails.fromJson(res) ;
+
+      });
+    } catch (error) {
+      print("abccc" + error);
+    }
+  }
+  Future<ModelMarketChart> marketChart(String coinID,String currency,String noOfDays) async {
+    try {
+      var url = Uri(
+          scheme: 'https',
+          host: 'api.coingecko.com',
+          path: 'api/v3/coins/'+coinID+"/market_chart?vs_currency="+currency+"&days="+noOfDays);
+
+      var url1 = Uri.decodeComponent(url.toString());
+
+      return _netUtil
+          .get(url1)
+          .then((dynamic res) {
+        return ModelMarketChart.fromJson(res) ;
 
       });
     } catch (error) {

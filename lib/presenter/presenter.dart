@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
+import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/coinList/model/modelCoinsList.dart';
@@ -14,9 +15,11 @@ abstract class ScreenContract {
 
   void onApiSuccessCoinsList(List coins);
   void onApiSuccessCoinDetails(ModelCoinDetails coindetails);
+  void onApiSuccessMarketChart(ModelMarketChart coindetails);
 
   void onApiErrorCoinsList(String errorTxt);
   void onApiErrorCoinsDetails(String errorTxt);
+  void onApiErrorMarketChart(String errorTxt);
 }
 
 class ScreenPrsenter {
@@ -56,5 +59,14 @@ class ScreenPrsenter {
       _view.onApiErrorCoinsDetails(error.toString());
     }
   }
-
+  marketChart(String coinID,String currency,String noOfDays) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var marketChart = await api.marketChart(coinID,currency,noOfDays);
+      _view.onApiSuccessMarketChart(marketChart);
+    } on Exception catch(error) {
+      print(error);
+      _view.onApiErrorMarketChart(error.toString());
+    }
+  }
 }
