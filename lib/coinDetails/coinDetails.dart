@@ -38,7 +38,7 @@ class _CoinDetailsState extends State<CoinDetails>
     implements ScreenContract {
   TabController _tabController;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  String rank = "", circulatingSupply = "", volume = "", marketCap = "";
   List<Tab> tabList = List();
   String email;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -92,16 +92,7 @@ class _CoinDetailsState extends State<CoinDetails>
     {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
     {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
     {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
-    {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-    {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-    {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-    {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
-    {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
-    {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-    {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-    {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-    {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
-    {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
+
   ];
 
   double height = 0.0, width = 0.0;
@@ -230,149 +221,198 @@ class _CoinDetailsState extends State<CoinDetails>
                                                           FontStyle.italic),
                                                 )),
 
-                                    Stack(
-                                        children: <Widget>[  Column(
-                                        children: <Widget>[  Container(
-                                                child: Column(
-                                              children: <Widget>[
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    25, 10, 10, 5),
-                                                                child: Text("Volume",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white))),
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    30, 0, 10, 10),
-                                                                child: Text(
-                                                                    "hjk",
-
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white)))
-                                                          ]),
-                                                      Column(
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment.end,
-                                                          children: <Widget>[
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    5, 10, 25, 5),
-                                                                child: Text("Market Cap",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white))),
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    5, 0, 65, 10),
-                                                                child: Text(
-                                                                   "hii",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white)))
-                                                          ])
-                                                    ]),
-                                                Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: <Widget>[
-                                                      Column(
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    25, 10, 10, 5),
-                                                                child: Text("Rank",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white))),
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    30, 0, 10, 10),
-                                                                child: TextField(
-
-                                                                    textAlign: TextAlign.left,
-                                                                    decoration: new InputDecoration(
-                                                                        hintText: 'Search',
-                                                                        labelText: 'Search',
-                                                                        labelStyle: TextStyle(
-
-                                                                            fontWeight:
-                                                                            FontWeight.normal,
-                                                                            color: Colors.white),
-                                                                        hintStyle: TextStyle(
-
-                                                                            fontWeight:
-                                                                            FontWeight.normal,
-                                                                            color: Colors.white),
-                                                                        border: InputBorder.none),
-                                                                    style: TextStyle(
-
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white)))
-                                                          ]),
-                                                      Column(
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment.end,
-                                                          children: <Widget>[
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    5, 10, 25, 5),
-                                                                child: Text("Circulating Supply",
-                                                                    textAlign: TextAlign.left,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white))),
-                                                            Container(
-                                                                padding: EdgeInsets.fromLTRB(
-                                                                    5, 0, 65, 10),
-                                                                child: Text(
-                                                                    "hii",
-                                                                    textAlign: TextAlign.center,
-                                                                    style: TextStyle(
-                                                                        fontWeight:
-                                                                        FontWeight.normal,
-                                                                        color: Colors.white)))
-                                                          ])
-                                                    ]),
+                                            Stack(children: <Widget>[
+                                              Column(children: <Widget>[
                                                 Container(
-                                                  height: 240.0,
-                                                  margin: EdgeInsets.only(top:20.0),
-                                                  child: OHLCVGraph(
-                                                      data: sampleData,
-                                                      enableGridLines: true,
-                                                      volumeProp: 0.3,
-                                                      gridLineAmount: 5,
-                                                      labelPrefix: "INR ",
-                                                      gridLineColor:
-                                                          Colors.grey[300],
-                                                      gridLineLabelColor:
-                                                          Colors.white),
-                                                ),
-                                              ],
-                                            ))])])
+                                                    child: Column(
+                                                  children: <Widget>[
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: <Widget>[
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <
+                                                                  Widget>[
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            25,
+                                                                            10,
+                                                                            10,
+                                                                            5),
+                                                                    child: Text(
+                                                                        "Volume",
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white))),
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            25,
+                                                                            0,
+                                                                            10,
+                                                                            10),
+                                                                    child: Text(
+                                                                        "hjk",
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white)))
+                                                              ]),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: <
+                                                                  Widget>[
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            5,
+                                                                            10,
+                                                                            25,
+                                                                            5),
+                                                                    child: Text(
+                                                                        "Market Cap",
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white))),
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            5,
+                                                                            0,
+                                                                            25,
+                                                                            10),
+                                                                    child: Text(
+                                                                       marketCap,
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white)))
+                                                              ])
+                                                        ]),
+                                                    Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: <Widget>[
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: <
+                                                                  Widget>[
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            25,
+                                                                            10,
+                                                                            10,
+                                                                            5),
+                                                                    child: Text(
+                                                                        "Rank",
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white))),
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            25,
+                                                                            0,
+                                                                            65,
+                                                                            10),
+                                                                    child: Text(
+                                                                        rank,
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white)))
+                                                              ]),
+                                                          Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .end,
+                                                              children: <
+                                                                  Widget>[
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            5,
+                                                                            10,
+                                                                            25,
+                                                                            5),
+                                                                    child: Text(
+                                                                        "Circulating Supply",
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .left,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white))),
+                                                                Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            5,
+                                                                            0,
+                                                                            25,
+                                                                            10),
+                                                                    child: Text(
+                                                                        circulatingSupply,
+                                                                        textAlign:
+                                                                            TextAlign
+                                                                                .center,
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            color: Colors.white)))
+                                                              ])
+                                                        ]),
+                                                    Container(
+                                                      height: 240.0,
+                                                      margin: EdgeInsets.only(
+                                                          top: 20.0),
+                                                      child: OHLCVGraph(
+                                                          data: sampleData,
+                                                          enableGridLines: true,
+                                                          volumeProp: 0.3,
+                                                          gridLineAmount: 5,
+                                                          labelPrefix: "INR ",
+                                                          gridLineColor:
+                                                              Colors.grey[300],
+                                                          gridLineLabelColor:
+                                                              Colors.white),
+                                                    ),
+                                                  ],
+                                                ))
+                                              ])
+                                            ])
 
 //                                                    Builder(
 //                                                        builder: (context) => Container(
@@ -826,7 +866,18 @@ class _CoinDetailsState extends State<CoinDetails>
 
   @override
   void onApiSuccessCoinDetails(ModelCoinDetails coindetails) {
-    print("SuccessCall");
+
+    setState(() {
+      print("Rank " + coindetails.marketCapRank.toString());
+      rank = coindetails.marketCapRank.toString();
+//    print("Volme "+coindetails.tickers.);
+      print("Circulating Supply " +
+          coindetails.marketData.circulatingSupply.toString());
+      circulatingSupply = coindetails.marketData.circulatingSupply.toString();
+
+      print("MarketCap " + coindetails.marketData.marketCap["inr"].toString());
+      marketCap = coindetails.marketData.marketCap["inr"].toString();
+    });
   }
 
   @override
@@ -858,9 +909,7 @@ class _CoinDetailsState extends State<CoinDetails>
 //      }
 //    }
 
-    var arr=[];
-
-
+    var arr = [];
 
 //    for (int i = 0; i < marketChart.prices.length; i++) {
 ////      var date = new DateTime.fromMillisecondsSinceEpoch(marketChart.prices[i][0].toInt() * 1000);
