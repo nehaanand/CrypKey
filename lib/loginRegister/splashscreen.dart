@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
 import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/loginRegister.dart';
 import 'package:flutter_app/presenter/presenter.dart';
@@ -21,9 +22,7 @@ class _SplashScreenState extends State<SplashScreenPage>
   var coinListInsertionDateTime = 0;
   bool _loded = false;
   DatabaseHelper dbCon = new DatabaseHelper();
-
-  // bool _load = false;
-
+  ScreenPrsenter _presenter;
   TextEditingController noOfDaysController = new TextEditingController();
   TextEditingController noOfEntriesOnGraphController =
       new TextEditingController();
@@ -31,6 +30,13 @@ class _SplashScreenState extends State<SplashScreenPage>
   final routes = <String, WidgetBuilder>{
     Login1.tag: (context) => Login1(),
   };
+
+//
+//  @override
+//  void didChangeDependencies() {
+//    Future<List> list = InheritedCurrencyList.of(context).currencylist;
+//    super.didChangeDependencies();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +65,26 @@ class _SplashScreenState extends State<SplashScreenPage>
   @override
   void initState() {
     super.initState();
-    setState(() {
+    setState(() async {
       ScreenPrsenter _presenter;
-
       _presenter = new ScreenPrsenter(this);
 
-      _presenter.coinsList();
+      _presenter.coinsList().then((value) async {
+        _presenter.currencyList();
+
+//        SharedPreferences prefs = await SharedPreferences.getInstance();
+//        bool firstTime = prefs.getBool('firstTime');
+//
+//        if (firstTime == null || firstTime) {
+//          prefs.setBool('firstTime', false);
+//          print("running");
+//          _presenter.currencyList();
+//        }
+//        else{
+//          print("notrunning");
+//
+//        }
+      });
 //      _presenter.marketChart("01coin", "inr", "1");
     });
 
@@ -90,6 +110,7 @@ class _SplashScreenState extends State<SplashScreenPage>
 //
     dbCon.syncCoinData(coins).then((value) {
       coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
+//      dbCon.syncCurrencyAndCoins(coinListInsertionDateTime);
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
           builder: (BuildContext context) => new Login1()));
     });
@@ -136,7 +157,8 @@ class _SplashScreenState extends State<SplashScreenPage>
       for (int k = 0; k < mapNoOfEntries.length; k++) {
         for (int i = 0; i < marketChart.prices.length; i++) {
           var open = marketChart.prices[0][0];
-          var close = marketChart.prices[marketChart.prices.length-1][0] + mapNoOfEntries[k];
+          var close = marketChart.prices[marketChart.prices.length - 1][0] +
+              mapNoOfEntries[k];
 
           if (marketChart.prices[i][0] > open &&
               marketChart.prices[i][0] < close) {
@@ -153,4 +175,82 @@ class _SplashScreenState extends State<SplashScreenPage>
 
   @override
   void onApiErrorMarketChart(String errorTxt) {}
+
+  @override
+  void onApiSuccessCurrenciesList(List currencies) {
+    dbCon.syncCurrencyData(currencies).then((value) {
+//      coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
+
+    });
+  }
+
+  @override
+  void onApiErrorCurrenciesList(String errorTxt) {
+
+  }
 }
+
+//class InheritedCurrencyList extends InheritedWidget {
+//  final CurrencyList currencyList;
+//
+//  InheritedCurrencyList({
+//    Key key,
+//    @required Widget child,
+//  })  : assert(child != null),
+//        currencyList = CurrencyList(),
+//        super(key: key, child: child);
+//
+//  static CurrencyList of(BuildContext context) =>
+//      (context.inheritFromWidgetOfExactType(InheritedCurrencyList)
+//              as InheritedCurrencyList)
+//          .currencyList;
+//
+//  @override
+//  bool updateShouldNotify(InheritedCurrencyList old) => false;
+//}
+
+//class CurrencyList implements ScreenContract {
+//  List _employees;
+//
+//  CurrencyList() {}
+//
+//  Future<List> get currencylist async {
+//    ScreenPrsenter presenter = new ScreenPrsenter(this);
+//
+//    presenter.coinsList();
+//    if (_employees != null) return _employees;
+//    return _employees;
+//  }
+//
+//  @override
+//  void onLoginSuccess(ModelHomePage user) {}
+//
+//  @override
+//  void onApiErrorMarketChart(String errorTxt) {}
+//
+//  @override
+//  void onApiErrorCoinsDetails(String errorTxt) {}
+//
+//  @override
+//  void onApiErrorCoinsList(String errorTxt) {}
+//
+//  @override
+//  void onApiSuccessMarketChart(ModelMarketChart coindetails) {}
+//
+//  @override
+//  void onApiSuccessCoinDetails(ModelCoinDetails coindetails) {}
+//
+//  @override
+//  void onApiSuccessCoinsList(List coins) {
+//    print("Inherited Call");
+//  }
+//
+//  @override
+//  void onLoginError(String errorTxt) {}
+//}
+
+//  Future<List<Employees>> get employees async {
+//    if (_employees != null) return _employees;
+//    return _employees = await EmpNetworkUtils().getEmployees(authToken);
+//  }
+//}

@@ -924,4 +924,14 @@ class _CoinDetailsState extends State<CoinDetails>
 
   @override
   void onApiErrorMarketChart(String errorTxt) {}
+
+  @override
+  void onApiSuccessCurrenciesList(List coins) {
+
+  }
+
+  @override
+  void onApiErrorCurrenciesList(String errorTxt) {
+
+  }
 }

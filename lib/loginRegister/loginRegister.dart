@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/homePage/homeScreen.dart';
 import 'package:flutter_app/coinList/coinList.dart';
+import 'package:flutter_app/preferences/preferences.dart';
 
 class Login1 extends StatefulWidget {
   final databaseReference = Firestore.instance;
@@ -17,6 +18,7 @@ class Login1 extends StatefulWidget {
 
     HomeScreen.tag: (context) => HomeScreen(),
     CoinList.tag: (context) => CoinList(),
+    Preferences.tag: (context) => Preferences(),
 //    NavigationDrawerDemo.tag: (context) => NavigationDrawerDemo(),
   };
 
@@ -126,7 +128,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                     textColor: Colors.white,
                     fontSize: 14.0).then((value){
                   Navigator.of(context).pushReplacement(
-                      new MaterialPageRoute(builder: (BuildContext context) => new CoinList()));
+                      new MaterialPageRoute(builder: (BuildContext context) => new Preferences()));
                 });
 
               });

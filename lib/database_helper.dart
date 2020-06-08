@@ -7,6 +7,7 @@ import 'package:flutter_app/coinList/model/modelCoinsList.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = new DatabaseHelper.internal();
+
   factory DatabaseHelper() => _instance;
 
   static Database _db;
@@ -24,11 +25,6 @@ class DatabaseHelper {
   initDb() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, "crypkey.db");
-//
-//    String databasesPath = await getDatabasesPath();
-//    String path = join(databasesPath, 'crypkey.db');
-
-
     var ourDb = await openDatabase(path, version: 2, onCreate: _onCreate);
     return ourDb;
   }
@@ -49,11 +45,13 @@ class DatabaseHelper {
     return res;
   }
 
-  Future<int> syncCoinData(List modelCoinsList) async { // syncCoinData
+  Future<int> syncCoinData(List modelCoinsList) async {
+    // syncCoinData
     try {
       var dbClient = await db;
       await dbClient.execute("DROP TABLE IF EXISTS coins");
-      await dbClient.execute("CREATE TABLE coins (id TEXT PRIMARY KEY, name TEXT NOT NULL, symbol TEXT NOT NULL)");
+      await dbClient.execute(
+          "CREATE TABLE coins (id TEXT PRIMARY KEY, name TEXT NOT NULL, symbol TEXT NOT NULL)");
 
       await dbClient.transaction((txn) async {
         var batch = txn.batch();
@@ -62,45 +60,92 @@ class DatabaseHelper {
         });
         await batch.commit(noResult: true);
       });
-      var result = await dbClient.query("coins");
-
-      print("Hello my world;;"+result.length.toString());
-    }
-    catch(error){
+    } catch (error) {
       print(error.toString());
     }
   }
 
+  Future<int> syncCurrencyData(List currencies) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+      await dbClient.execute("DROP TABLE IF EXISTS currencies");
+      await dbClient.execute(
+          "CREATE TABLE currencies (id TEXT PRIMARY KEY, currencyName TEXT NOT NULL,currencyValue TEXT NOT NULL)");
 
-  Future<List> getCoinsData() async { // syncCoinData
+
+      await dbClient.transaction((txn) async {
+        var batch = txn.batch();
+        currencies.forEach((val) {
+          batch.insert("currencies", val);
+        });
+        await batch.commit(noResult: true);
+      });
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  Future<int> syncCurrencyAndCoins(var coinListInsertionDateTime) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+      await dbClient.execute("DROP TABLE IF EXISTS preferences");
+      await dbClient.execute(
+          "CREATE TABLE preferences (id TEXT PRIMARY KEY, coinPref TEXT NOT NULL, currencyPref TEXT NOT NULL)");
+
+      Map<String, dynamic> row = {
+        'coinPref': coinListInsertionDateTime,
+        'currencyPref': 23
+      };
+
+      // do the insert and get the id of the inserted row
+      int id = await dbClient.insert("preferences", row);
+
+      print("id;" + id.toString());
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  Future<List> getCoinsData() async {
+    // syncCoinData
     try {
       var dbClient = await db;
 
       var result = await dbClient.query("coins");
-
 
       return result.toList();
-
-    }
-    catch(error){
+    } catch (error) {
       print(error.toString());
     }
   }
-
-  //select * from sentences where title or body = userinput%
-  Future<List> filterList(String userinput) async { // syncCoinData
+  Future<List> getCurrency() async {
+    // syncCoinData
     try {
       var dbClient = await db;
 
-      var result = await dbClient.rawQuery("SELECT * FROM coins WHERE name LIKE '%$userinput%' OR symbol LIKE '%$userinput%'");
+      var result = await dbClient.query("currencies");
+
+      return result.toList();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+  //select * from sentences where title or body = userinput%
+  Future<List> filterList(String userinput) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+
+      var result = await dbClient.rawQuery(
+          "SELECT * FROM coins WHERE name LIKE '%$userinput%' OR symbol LIKE '%$userinput%'");
 //      var result = await dbClient.query("coins", columns: ["id","name"],
 //          where: whereString,
 //          whereArgs: whereArguments);
 
       return result.toList();
-
-    }
-    catch(error){
+    } catch (error) {
       print(error.toString());
     }
   }
@@ -111,7 +156,6 @@ class DatabaseHelper {
 //    int res = await dbClient.delete("User");
 //    return res;
 //  }
-
 
 //  Future<List> getAllCoins() async{
 //    var dbClient = await db;
@@ -132,10 +176,11 @@ class DatabaseHelper {
 
     var res = await dbClient.query("Coins");
 
-    List<ModelCoinsList> list =
-    res.isNotEmpty ? res.map((c) => ModelCoinsList.fromJson(c)).toList() : null;
+    List<ModelCoinsList> list = res.isNotEmpty
+        ? res.map((c) => ModelCoinsList.fromJson(c)).toList()
+        : null;
     return List.generate(list.length, (i) {
-        print("list"+list.length.toString());
+      print("list" + list.length.toString());
       return ModelCoinsList(
         id: list[i].id,
         name: list[i].name,

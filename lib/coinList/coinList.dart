@@ -406,6 +406,16 @@ class _CoinListState extends State<CoinList> implements ScreenContract {
 
   }
 
+  @override
+  void onApiSuccessCurrenciesList(List coins) {
+
+  }
+
+  @override
+  void onApiErrorCurrenciesList(String errorTxt) {
+
+  }
+
 //  @override
 //  void onLoginSuccess(String errorTxt) {
 //    // TODO: implement onLoginError

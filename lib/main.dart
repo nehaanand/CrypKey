@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/splashscreen.dart';
+import 'package:flutter_app/loginRegister/splashscreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,4 +11,5 @@ class MyApp extends StatelessWidget {
         home: SplashScreenPage()
     );
   }
+
 }

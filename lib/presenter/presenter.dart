@@ -14,12 +14,14 @@ abstract class ScreenContract {
   void onLoginError(String errorTxt);
 
   void onApiSuccessCoinsList(List coins);
+  void onApiSuccessCurrenciesList(List coins);
   void onApiSuccessCoinDetails(ModelCoinDetails coindetails);
   void onApiSuccessMarketChart(ModelMarketChart coindetails);
 
   void onApiErrorCoinsList(String errorTxt);
   void onApiErrorCoinsDetails(String errorTxt);
   void onApiErrorMarketChart(String errorTxt);
+  void onApiErrorCurrenciesList(String errorTxt);
 }
 
 class ScreenPrsenter {
@@ -46,6 +48,19 @@ class ScreenPrsenter {
     } on Exception catch(error) {
       print(error);
       _view.onApiErrorCoinsList(error.toString());
+    }
+  }
+  currencyList() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var user = await api.currencyList();
+      print(user);
+      _view.onApiSuccessCurrenciesList(user);
+
+    } on Exception catch(error) {
+      print(error);
+      _view.onApiErrorCurrenciesList(error.toString());
+
     }
   }
 
