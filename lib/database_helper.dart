@@ -71,16 +71,19 @@ class DatabaseHelper {
       var dbClient = await db;
       await dbClient.execute("DROP TABLE IF EXISTS currencies");
       await dbClient.execute(
-          "CREATE TABLE currencies (id TEXT PRIMARY KEY, currencyName TEXT NOT NULL,currencyValue TEXT NOT NULL)");
+          "CREATE TABLE currencies (currencyName TEXT NOT NULL,currencyValue TEXT NOT NULL)");
 
 
       await dbClient.transaction((txn) async {
         var batch = txn.batch();
         currencies.forEach((val) {
-          batch.insert("currencies", val);
+          batch.insert("currencies", val.toJson());
         });
         await batch.commit(noResult: true);
+
+
       });
+
     } catch (error) {
       print(error.toString());
     }
@@ -140,10 +143,19 @@ class DatabaseHelper {
 
       var result = await dbClient.rawQuery(
           "SELECT * FROM coins WHERE name LIKE '%$userinput%' OR symbol LIKE '%$userinput%'");
-//      var result = await dbClient.query("coins", columns: ["id","name"],
-//          where: whereString,
-//          whereArgs: whereArguments);
+      return result.toList();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
 
+  Future<List> filterCurrencies(String userinput) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+
+      var result = await dbClient.rawQuery(
+          "SELECT * FROM currencies WHERE currencyValue LIKE '%$userinput%' OR currencyName LIKE '%$userinput%'");
       return result.toList();
     } catch (error) {
       print(error.toString());

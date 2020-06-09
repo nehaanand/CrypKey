@@ -11,6 +11,7 @@ import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/coinList/model/modelCoinsList.dart';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
 import 'package:flutter_app/preferences/model/modelCurrencies.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class MobileRestDatasource {
   NetworkUtil _netUtil = new NetworkUtil();
@@ -74,8 +75,14 @@ class MobileRestDatasource {
 
       return _netUtil.get(url1).then((dynamic res) {
         List<dynamic> list = [];
+        Map<String, String> someMap;
+
         for (var i = 0; i < res.length; i++) {
-          list.add(new ModelCurrencies.map(res[i],res[i].toString().toUpperCase()));
+          someMap = {
+            "currencyValue": res[i],
+            "currencyName": res[i].toString().toUpperCase().toString(),
+          };
+          list.add(new ModelCurrencies.fromJson(someMap));
         }
 
         return list;

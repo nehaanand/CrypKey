@@ -7,6 +7,7 @@ import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/database_helper.dart';
 import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
+import 'package:flutter_app/userprofile/userProfile.dart';
 import 'dart:collection';
 
 class SplashScreenPage extends StatefulWidget {
@@ -28,6 +29,7 @@ class _SplashScreenState extends State<SplashScreenPage>
       new TextEditingController();
   TextEditingController minutesInADayController = new TextEditingController();
   final routes = <String, WidgetBuilder>{
+    UserProfile.tag: (context) => UserProfile(),
     Login1.tag: (context) => Login1(),
   };
 
@@ -112,7 +114,7 @@ class _SplashScreenState extends State<SplashScreenPage>
       coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
 //      dbCon.syncCurrencyAndCoins(coinListInsertionDateTime);
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new Login1()));
+          builder: (BuildContext context) => new UserProfile()));
     });
   }
 
@@ -180,7 +182,7 @@ class _SplashScreenState extends State<SplashScreenPage>
   void onApiSuccessCurrenciesList(List currencies) {
     dbCon.syncCurrencyData(currencies).then((value) {
 //      coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
-
+      dbCon.getCurrency();
     });
   }
 
