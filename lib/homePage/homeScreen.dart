@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/loginRegister.dart';
+import 'package:flutter_app/loginRegister/loginRegister.dart';
 
 class HomeScreen extends StatefulWidget {
   static String tag = 'splash-page';

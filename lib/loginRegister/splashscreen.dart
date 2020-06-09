@@ -2,13 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
-import 'file:///D:/neha/HybridWorkspace/CrypKey/lib/loginRegister/loginRegister.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/database_helper.dart';
 import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
 import 'package:flutter_app/userprofile/userProfile.dart';
+import 'package:flutter_app/loginRegister/loginRegister.dart';
 import 'dart:collection';
+
 
 class SplashScreenPage extends StatefulWidget {
   static String tag = 'splash-page';

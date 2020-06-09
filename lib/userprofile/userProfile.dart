@@ -1,12 +1,11 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/coinDetails/coinDetails.dart';
 import 'package:flutter_app/coinDetails/model/modelCoinDetails.dart';
+import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
 import 'package:flutter_app/database_helper.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
-import 'package:flutter_app/preferences/model/modelCurrencies.dart';
 import 'package:flutter_app/presenter/presenter.dart';
-import 'package:flutter_app/coinDetails/coinDetails.dart';
-import 'package:flutter_app/coinDetails/model/modelMarketChart.dart';
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class UserProfile extends StatefulWidget {
@@ -21,6 +20,7 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
   bool _loded = false;
   List _searchResult = [];
   List _userDetails = [];
+  final TextEditingController _typeAheadController = TextEditingController();
 
   DatabaseHelper dbCon = new DatabaseHelper();
   TextEditingController searchController = new TextEditingController();
@@ -49,10 +49,10 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
         primaryColor: const Color(0xFF006994),
       ),
       home: new Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            title: Text('Coins List'),
-          ),
+        key: scaffoldKey,
+        appBar: AppBar(
+          title: Text('Coins List'),
+        ),
 //        body: (searchController.text.isEmpty)
 //            ? FutureBuilder<List>(
 //          future: dbCon.getCoinsData(),
@@ -325,35 +325,73 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
 //            );
 //          },
 //        ),
-          body: Column(
+        body: Column(
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                child: TypeAheadField(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    autofocus: true,
+                    style: TextStyle(
+                        color: Colors
+                            .black54,
+                        fontSize: 16.0),
 
-            children: <Widget>[
-              TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: true,
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.italic),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Type here'),
-                ),
-                suggestionsCallback: (pattern) async {
-                  return await dbCon.filterCurrencies(pattern);
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    leading: Icon(Icons.shopping_cart),
-                    title: Text(suggestion['currencyName']),
-                    subtitle: Text('\$${suggestion['currencyValue']}'),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
+//                    style: DefaultTextStyle.of(context).style.copyWith(
+//                        fontStyle: FontStyle.normal,
+//                        fontSize: 18.0,
+//                        color: Colors.black38),
+                    controller: this._typeAheadController,
+                    decoration: InputDecoration(
+                        border: new UnderlineInputBorder(
+                            borderSide: new BorderSide(
+                          color: Colors.grey,
+                        )),
+                        hintText: 'Currency Name'),
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    return await dbCon.filterCurrencies(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion['currencyName']),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
 
-                },
-              ),
-            ],
-          ),),
+//setState(() {
+  this._typeAheadController.text = suggestion;
+                    print("sugg " + suggestion);
+
+//});
+                  },
+                )),
+            Container(
+                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                height: 40.0,
+                child: TypeAheadField(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    autofocus: false,
+                    style: DefaultTextStyle.of(context).style.copyWith(
+                        fontStyle: FontStyle.normal,
+                        fontSize: 18.0,
+                        color: Colors.black38),
+
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Language'),
+                  ),
+                  suggestionsCallback: (pattern) async {
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion['currencyName']),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {},
+                )),
+          ],
+        ),
+      ),
     );
   }
 
