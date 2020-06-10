@@ -1,5 +1,4 @@
 import 'dart:convert' show utf8;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:email_validator/email_validator.dart';
@@ -102,7 +101,7 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
           _formKey2.currentState.save();
           String encdata = generateMd5(password);
 
-          databaseReference
+        databaseReference
               .collection("Users")
               .where("username", isEqualTo: username)
               .where("password", isEqualTo: encdata)
@@ -117,9 +116,15 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   fontSize: 14.0);
-            } else {
+
+            }
+            else {
               value.documents.forEach((result) {
+
+                print(value.documents.toString());
+
                 Fluttertoast.showToast(
+
                     msg: "Login Successful",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,

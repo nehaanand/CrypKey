@@ -10,6 +10,7 @@ import 'package:flutter_app/userprofile/userProfile.dart';
 import 'package:flutter_app/loginRegister/loginRegister.dart';
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SplashScreenPage extends StatefulWidget {
   static String tag = 'splash-page';
@@ -33,6 +34,8 @@ class _SplashScreenState extends State<SplashScreenPage>
     UserProfile.tag: (context) => UserProfile(),
     Login1.tag: (context) => Login1(),
   };
+  final databaseReference = Firestore.instance;
+
 
 //
 //  @override
@@ -175,15 +178,32 @@ class _SplashScreenState extends State<SplashScreenPage>
       print(error);
     }
   }
-
   @override
   void onApiErrorMarketChart(String errorTxt) {}
 
   @override
   void onApiSuccessCurrenciesList(List currencies) {
     dbCon.syncCurrencyData(currencies).then((value) {
-//      coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
-      dbCon.getCurrency();
+      dbCon.getCurrency().then((value) {
+        getLanguagesFromFirestore();
+      });
+    });
+  }
+
+  void getLanguagesFromFirestore() {
+    List<dynamic> languagesList = [];
+    Map<String, String> lanMap;
+
+    databaseReference.collection("Languages").getDocuments().then((querySnapshot) {
+      querySnapshot.documents.forEach((result) {
+        print(result.data);
+        lanMap = {
+          "lang": result.data["lang"],
+        };
+        languagesList.add(lanMap);
+      });
+      dbCon.syncLanguages(languagesList);
+
     });
   }
 

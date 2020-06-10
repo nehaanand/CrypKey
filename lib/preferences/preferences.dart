@@ -216,7 +216,7 @@ class _PreferencesState extends State<Preferences> implements ScreenContract {
           },
         )
             : FutureBuilder<List>(
-          future: dbCon.filterList(searchController.text),
+          future: dbCon.filterCoins(searchController.text),
           initialData: List(),
           builder: (context, snapshot) {
             return snapshot.hasData

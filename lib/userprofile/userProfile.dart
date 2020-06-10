@@ -7,6 +7,8 @@ import 'package:flutter_app/database_helper.dart';
 import 'package:flutter_app/homePage/modelHomePage.dart';
 import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserProfile extends StatefulWidget {
   static String tag = 'user-profile-page';
@@ -20,7 +22,10 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
   bool _loded = false;
   List _searchResult = [];
   List _userDetails = [];
-  final TextEditingController _typeAheadController = TextEditingController();
+  final TextEditingController currencyTextController = TextEditingController();
+  final TextEditingController languageTextController = TextEditingController();
+  final TextEditingController coinTextController = TextEditingController();
+  final databaseReference = Firestore.instance;
 
   DatabaseHelper dbCon = new DatabaseHelper();
   TextEditingController searchController = new TextEditingController();
@@ -328,47 +333,76 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
         body: Column(
           children: <Widget>[
             Container(
+                height: 50.0,
+
                 margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+                padding: EdgeInsets.all(0),
                 child: TypeAheadField(
                   textFieldConfiguration: TextFieldConfiguration(
                     autofocus: true,
-                    style: TextStyle(
-                        color: Colors
-                            .black54,
-                        fontSize: 16.0),
+//                    style: TextStyle(color: Colors.black54, fontSize: 16.0),
 
-//                    style: DefaultTextStyle.of(context).style.copyWith(
-//                        fontStyle: FontStyle.normal,
-//                        fontSize: 18.0,
-//                        color: Colors.black38),
-                    controller: this._typeAheadController,
+                    style: DefaultTextStyle.of(context).style.copyWith(
+                        fontStyle: FontStyle.normal,
+                        fontSize: 18.0,
+                        color: Colors.black38),
+                    controller: currencyTextController,
                     decoration: InputDecoration(
-                        border: new UnderlineInputBorder(
-                            borderSide: new BorderSide(
-                          color: Colors.grey,
-                        )),
+                        border: new OutlineInputBorder(
+                          ),
                         hintText: 'Currency Name'),
                   ),
                   suggestionsCallback: (pattern) async {
+                    if(currencyTextController.text.length!=0){
                     return await dbCon.filterCurrencies(pattern);
-                  },
+                  }},
                   itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(suggestion['currencyName']),
-                    );
+                    return GestureDetector(
+                        onTap: () {
+//                        print("sugg " + suggestion['currencyName']);
+                        },
+                        child: ListTile(
+                          title: Text(suggestion['currencyName']),
+                        ));
                   },
                   onSuggestionSelected: (suggestion) {
-
-//setState(() {
-  this._typeAheadController.text = suggestion;
-                    print("sugg " + suggestion);
-
-//});
+                    currencyTextController.text = suggestion['currencyName'];
+                    print("sugg " + suggestion['currencyName']);
+                    setState(() {});
                   },
                 )),
             Container(
-                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                height: 40.0,
+                margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                height: 50.0,
+                child: TypeAheadField(
+
+                  textFieldConfiguration: TextFieldConfiguration(
+                    autofocus: false,
+                    style: DefaultTextStyle.of(context).style.copyWith(
+                        fontStyle: FontStyle.normal,
+                        fontSize: 18.0,
+                        color: Colors.black38),
+                    controller: languageTextController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Language'),
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    return await dbCon.filterLanguages(pattern);
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(suggestion['lang']),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    languageTextController.text = suggestion['lang'];
+                    print("sugg " + suggestion['lang']);
+                    setState(() {});
+                  },
+                )),
+            Container(
+                margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                height: 50.0,
                 child: TypeAheadField(
                   textFieldConfiguration: TextFieldConfiguration(
                     autofocus: false,
@@ -376,19 +410,50 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
                         fontStyle: FontStyle.normal,
                         fontSize: 18.0,
                         color: Colors.black38),
+                    controller: coinTextController,
 
                     decoration: InputDecoration(
-                        border: OutlineInputBorder(), hintText: 'Language'),
+                        border: OutlineInputBorder(), hintText: 'Coin Name'),
                   ),
                   suggestionsCallback: (pattern) async {
+                    return await dbCon.filterCoins(pattern);
                   },
                   itemBuilder: (context, suggestion) {
                     return ListTile(
-                      title: Text(suggestion['currencyName']),
+                      title: Text(suggestion['name']),
                     );
                   },
-                  onSuggestionSelected: (suggestion) {},
+                  onSuggestionSelected: (suggestion) {
+                    coinTextController.text = suggestion['name'];
+                    print("sugg " + suggestion['name']);
+                    setState(() {});
+                  },
                 )),
+
+            Builder(
+                builder: (context) => Container(
+                    height: 50.0,
+                    margin: EdgeInsets.only(
+                        left: 10.0,
+                        right: 10.0,
+                        top: 50.0),
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: MaterialButton(
+                          color: const Color(
+                              0xFF729dc0),
+                          child: new Text(
+                            'Save Preferences',
+                            style: TextStyle(
+                                color: Colors
+                                    .white,
+                                fontSize: 16.0),
+                          ),
+                          onPressed: () async {
+                            setState(() {});
+
+                          },
+                        ))))
           ],
         ),
       ),
@@ -409,6 +474,29 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
 
     setState(() {});
   }
+//  void savePreferences() async {
+//
+//        databaseReference.collection("Users").add(
+//            {
+//              'name': nameController.text,
+//              'email': emailController.text,
+//              'mobileno': mobileController.text,
+//              'password': encdata,
+//              'username': userNameController.text,
+//            });
+//        Fluttertoast.showToast(
+//            msg: "Registered Successfully",
+//            toastLength: Toast.LENGTH_LONG,
+//            gravity: ToastGravity.BOTTOM,
+//            timeInSecForIosWeb: 3,
+//            backgroundColor: Colors.black,
+//            textColor: Colors.white,
+//            fontSize: 14.0);
+//
+//
+//
+//    _formKey1.currentState.reset();
+//  }
 
   Future<List<dynamic>> getCurrencies() {
     return dbCon.getCurrency();

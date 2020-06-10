@@ -88,7 +88,29 @@ class DatabaseHelper {
       print(error.toString());
     }
   }
+  Future<int> syncLanguages(List currencies) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+      await dbClient.execute("DROP TABLE IF EXISTS languages");
+      await dbClient.execute(
+          "CREATE TABLE languages (lang TEXT NOT NULL)");
 
+
+      await dbClient.transaction((txn) async {
+        var batch = txn.batch();
+        currencies.forEach((val) {
+          batch.insert("languages", val);
+        });
+        await batch.commit(noResult: true);
+
+
+      });
+
+    } catch (error) {
+      print(error.toString());
+    }
+  }
   Future<int> syncCurrencyAndCoins(var coinListInsertionDateTime) async {
     // syncCoinData
     try {
@@ -135,8 +157,21 @@ class DatabaseHelper {
       print(error.toString());
     }
   }
+
+  Future<List> getLanguages() async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+
+      var result = await dbClient.query("languages");
+
+      return result.toList();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
   //select * from sentences where title or body = userinput%
-  Future<List> filterList(String userinput) async {
+  Future<List> filterCoins(String userinput) async {
     // syncCoinData
     try {
       var dbClient = await db;
@@ -156,6 +191,19 @@ class DatabaseHelper {
 
       var result = await dbClient.rawQuery(
           "SELECT * FROM currencies WHERE currencyValue LIKE '%$userinput%' OR currencyName LIKE '%$userinput%'");
+      return result.toList();
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  Future<List> filterLanguages(String userinput) async {
+    // syncCoinData
+    try {
+      var dbClient = await db;
+
+      var result = await dbClient.rawQuery(
+          "SELECT * FROM languages WHERE lang LIKE '%$userinput%'");
       return result.toList();
     } catch (error) {
       print(error.toString());
