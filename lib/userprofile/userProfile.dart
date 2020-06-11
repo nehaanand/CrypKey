@@ -9,6 +9,7 @@ import 'package:flutter_app/presenter/presenter.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 
 class UserProfile extends StatefulWidget {
   static String tag = 'user-profile-page';
@@ -37,10 +38,22 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
     CoinDetails.tag: (context) => CoinDetails(),
   };
   AutoCompleteTextField searchTextField;
+  final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
+  List _items = [];
+  double _fontSize = 14;
 
   @override
   void initState() {
     super.initState();
+    // if you store data on a local database (sqflite), then you could do something like this
+
+//    dbCon.getCoinsData().then((items){
+//      _items = items;
+//      setState(() {
+//
+//      });
+
+//    });
   }
 
   @override
@@ -58,312 +71,30 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
         appBar: AppBar(
           title: Text('Coins List'),
         ),
-//        body: (searchController.text.isEmpty)
-//            ? FutureBuilder<List>(
-//          future: dbCon.getCoinsData(),
-//          initialData: List(),
-//          builder: (context, snapshot) {
-//            return snapshot.hasData
-//                ? new Column(children: <Widget>[
-//              Container(
-//                color: Theme.of(context).primaryColor,
-//                child: new Padding(
-//                  padding: const EdgeInsets.all(8.0),
-//                  child: new Card(
-//                    child: new ListTile(
-//                      leading: new Icon(Icons.search),
-//                      title: new TextField(
-//                        controller: searchController,
-//                        decoration: new InputDecoration(
-//                            hintText: 'Search',
-//                            border: InputBorder.none),
-//                        onChanged: onSearchTextChanged,
-//                      ),
-//                      trailing: new IconButton(
-//                        icon: new Icon(Icons.cancel),
-//                        onPressed: () {
-//                          searchController.clear();
-//                          onSearchTextChanged('');
-//                        },
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//              ),
-//              new Expanded(
-//                  child: ListView.builder(
-//                      itemBuilder:
-//                          (BuildContext context, int position) {
-//                        return GestureDetector(
-//                            child: Card(
-//                                child: ListTile(
-////                                                leading: Image.asset(
-////                                                    "assets/loc.png"),
-//                                    title: Text(snapshot
-//                                        .data[position].row[1]),
-//                                    trailing: Text(snapshot
-//                                        .data[position].row[2]))),
-//                            onTap: () {
-//                              Scaffold.of(context).showSnackBar(
-//                                  SnackBar(
-//                                      content: Text(snapshot
-//                                          .data[position].row[0])));
-//
-//                              Navigator.of(context).pushReplacement(
-//                                  new MaterialPageRoute(
-//                                      builder: (BuildContext
-//                                      context) =>
-//                                      new CoinDetails(
-//                                          coinID: snapshot
-//                                              .data[position]
-//                                              .row[0])));
-//                            });
-//                      },
-//                      itemCount: 10)),
-//
-////                        child: ListView.builder(
-////                      itemCount: snapshot.data.length,
-////
-////                      itemBuilder: (_, int position) {
-////                        final item = snapshot.data[position].toString();
-////                        //get your item data here ...
-////                        print("clickeditem "+item);
-////                        return Card(
-////                            child: ListTile(
-////                                leading: Image.asset("assets/loc.png"),
-////                                title: Text(snapshot.data[position].row[1]),
-////                                trailing:
-////                                    Text(snapshot.data[position].row[2])));
-////                      },
-////                    )
-//
-////                    ),
-//              Container(
-//                  padding: EdgeInsets.all(5.0),
-//                  height: 68.0,
-//                  color: const Color(0xFF006994),
-//                  child: Row(
-//                    mainAxisAlignment:
-//                    MainAxisAlignment.spaceBetween,
-//                    children: <Widget>[
-//                      Container(
-//                          padding:
-//                          EdgeInsets.only(top: 5.0, left: 20.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.home,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "HOME",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                      Container(
-//                          padding:
-//                          EdgeInsets.only(top: 5.0, left: 10.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.add,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "ADD",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                      Container(
-//                          padding: EdgeInsets.only(
-//                              top: 5.0, left: 10.0, right: 10.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.graphic_eq,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "MARKETS",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                    ],
-//                  )),
-//            ])
-//                : Center(
-//              child: CircularProgressIndicator(),
-//            );
-//          },
-//        )
-//            : FutureBuilder<List>(
-//          future: dbCon.filterList(searchController.text),
-//          initialData: List(),
-//          builder: (context, snapshot) {
-//            return snapshot.hasData
-//                ? new Column(children: <Widget>[
-//              Container(
-//                color: Theme.of(context).primaryColor,
-//                child: new Padding(
-//                  padding: const EdgeInsets.all(8.0),
-//                  child: new Card(
-//                    child: new ListTile(
-//                      leading: new Icon(Icons.search),
-//                      title: new TextField(
-//                        controller: searchController,
-//                        decoration: new InputDecoration(
-//                            hintText: 'Search',
-//                            border: InputBorder.none),
-//                        onChanged: onSearchTextChanged,
-//                      ),
-//                      trailing: new IconButton(
-//                        icon: new Icon(Icons.cancel),
-//                        onPressed: () {
-//                          searchController.clear();
-//                          onSearchTextChanged('');
-//                        },
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//              ),
-//              new Expanded(
-//                  child: ListView.builder(
-//                    itemCount: snapshot.data.length,
-//                    itemBuilder: (_, int position) {
-//                      final item = snapshot.data[position];
-//                      //get your item data here ...
-//                      return Card(
-//                          child: ListTile(
-////                                      leading: Image.asset("assets/loc.png"),
-//                              title:
-//                              Text(snapshot.data[position].row[1]),
-//                              trailing: Text(
-//                                  snapshot.data[position].row[2])));
-//                    },
-//                  )),
-//              Container(
-//                  padding: EdgeInsets.all(5.0),
-//                  height: 68.0,
-//                  color: const Color(0xFF006994),
-//                  child: Row(
-//                    mainAxisAlignment:
-//                    MainAxisAlignment.spaceBetween,
-//                    children: <Widget>[
-//                      Container(
-//                          padding:
-//                          EdgeInsets.only(top: 5.0, left: 20.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.home,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "HOME",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                      Container(
-//                          padding:
-//                          EdgeInsets.only(top: 5.0, left: 10.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.add,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "ADD",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                      Container(
-//                          padding: EdgeInsets.only(
-//                              top: 5.0, left: 10.0, right: 10.0),
-//                          child: Column(children: <Widget>[
-//                            Icon(
-//                              Icons.graphic_eq,
-//                              color: Colors.white,
-//                              size: 30.0,
-//                              semanticLabel: 'Password',
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.only(top: 5.0),
-//                                child: Text(
-//                                  "MARKETS",
-//                                  style: TextStyle(
-//                                      fontSize: 14.0,
-//                                      color: Colors.white),
-//                                ))
-//                          ])),
-//                    ],
-//                  )),
-//            ])
-//                : Center(
-//              child: CircularProgressIndicator(),
-//            );
-//          },
-//        ),
         body: Column(
           children: <Widget>[
             Container(
+                margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                 height: 50.0,
-
-                margin: EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-                padding: EdgeInsets.all(0),
                 child: TypeAheadField(
                   textFieldConfiguration: TextFieldConfiguration(
-                    autofocus: true,
-//                    style: TextStyle(color: Colors.black54, fontSize: 16.0),
-
+                    autofocus: false,
                     style: DefaultTextStyle.of(context).style.copyWith(
                         fontStyle: FontStyle.normal,
                         fontSize: 18.0,
                         color: Colors.black38),
                     controller: currencyTextController,
                     decoration: InputDecoration(
-                        border: new OutlineInputBorder(
-                          ),
+                        border: OutlineInputBorder(),
                         hintText: 'Currency Name'),
                   ),
                   suggestionsCallback: (pattern) async {
-                    if(currencyTextController.text.length!=0){
                     return await dbCon.filterCurrencies(pattern);
-                  }},
+                  },
                   itemBuilder: (context, suggestion) {
-                    return GestureDetector(
-                        onTap: () {
-//                        print("sugg " + suggestion['currencyName']);
-                        },
-                        child: ListTile(
-                          title: Text(suggestion['currencyName']),
-                        ));
+                    return ListTile(
+                      title: Text(suggestion['currencyName']),
+                    );
                   },
                   onSuggestionSelected: (suggestion) {
                     currencyTextController.text = suggestion['currencyName'];
@@ -375,7 +106,6 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
                 margin: EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                 height: 50.0,
                 child: TypeAheadField(
-
                   textFieldConfiguration: TextFieldConfiguration(
                     autofocus: false,
                     style: DefaultTextStyle.of(context).style.copyWith(
@@ -411,7 +141,6 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
                         fontSize: 18.0,
                         color: Colors.black38),
                     controller: coinTextController,
-
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), hintText: 'Coin Name'),
                   ),
@@ -426,32 +155,91 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
                   onSuggestionSelected: (suggestion) {
                     coinTextController.text = suggestion['name'];
                     print("sugg " + suggestion['name']);
-                    setState(() {});
+                    setState(() {
+                      _items.add(suggestion['symbol']);
+                      print("items " + _items.toString());
+                    });
                   },
                 )),
+            Container(
+                margin: EdgeInsets.only(top: 10.0),
+                child: Tags(
+                  key: _tagStateKey,
+//              textField: TagsTextField(
+//                textStyle: TextStyle(fontSize: _fontSize),
+//                constraintSuggestion: true,
+//                suggestions: [],
+//                onSubmitted: (String str) {
+//                  // Add item to the data source.
+//                  setState(() {
+//                    // required
+//                    _items.add(str);
+//                  });
+//                },
+//              ),
 
+                  itemCount: ((_items.length == 0 || _items == null)
+                      ? 0
+                      : _items.length), // required
+                  itemBuilder: (int index) {
+                    final item = _items[index];
+
+                    return Expanded(
+                        child:Row(
+
+                            mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children:<Widget>[ ItemTags(
+                              alignment:MainAxisAlignment.start,
+                              // Each ItemTags must contain a Key. Keys allow Flutter to
+                              // uniquely identify widgets.
+                              key: Key(index.toString()),
+                              index: index,
+                              // required
+                              title: item,
+//              active: item.active,
+//              customData: item.customData,
+                              textStyle: TextStyle(fontSize: _fontSize),
+//                  combine: ItemTagsCombine.withTextBefore,
+//              image: ItemTagsImage(
+//                  image: AssetImage("img.jpg") // OR NetworkImage("https://...image.png")
+//              ), // OR null,
+//                  icon: ItemTagsIcon(
+//                    icon: Icons.add,
+//                  ),
+                              // OR null,
+                              removeButton: ItemTagsRemoveButton(
+                                onRemoved: () {
+                                  // Remove the item from the data source.
+                                  setState(() {
+                                    // required
+                                    _items.removeAt(index);
+                                  });
+                                  //required
+                                  return true;
+                                },
+                              ),
+                              // OR null,
+                              onPressed: (item) => print(item),
+                              onLongPressed: (item) => print(item),
+                            )]));
+                  },
+                )),
             Builder(
                 builder: (context) => Container(
                     height: 50.0,
-                    margin: EdgeInsets.only(
-                        left: 10.0,
-                        right: 10.0,
-                        top: 50.0),
+                    margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 50.0),
                     child: SizedBox(
                         width: double.infinity,
                         child: MaterialButton(
-                          color: const Color(
-                              0xFF729dc0),
+                          color: const Color(0xFF729dc0),
                           child: new Text(
                             'Save Preferences',
-                            style: TextStyle(
-                                color: Colors
-                                    .white,
-                                fontSize: 16.0),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
                           ),
                           onPressed: () async {
                             setState(() {});
-
                           },
                         ))))
           ],
@@ -474,6 +262,7 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
 
     setState(() {});
   }
+
 //  void savePreferences() async {
 //
 //        databaseReference.collection("Users").add(
@@ -540,6 +329,12 @@ class UserProfileState extends State<UserProfile> implements ScreenContract {
 //  print("success " + dbCon.getAllUser().toString().length.toString());
 
 //}
+  }
+
+  _getAllItem() {
+    List<Item> lst = _tagStateKey.currentState?.getAllItem;
+    if (lst != null)
+      lst.where((a) => a.active == true).forEach((a) => print(a.title));
   }
 
   @override

@@ -8,13 +8,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/homePage/homeScreen.dart';
 import 'package:flutter_app/coinList/coinList.dart';
 import 'package:flutter_app/preferences/preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login1 extends StatefulWidget {
   final databaseReference = Firestore.instance;
 
   static String tag = 'login1-page';
   final routes = <String, WidgetBuilder>{
-
     HomeScreen.tag: (context) => HomeScreen(),
     CoinList.tag: (context) => CoinList(),
     Preferences.tag: (context) => Preferences(),
@@ -57,7 +57,6 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-
     tabList.add(new Tab(
       text: 'SIGN IN',
     ));
@@ -94,53 +93,45 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
     }
   }
 
-
   void userLogin(String username, String password) {
     if (_formKey2.currentState.validate()) {
+      _formKey2.currentState.save();
+      String encdata = generateMd5(password);
 
-          _formKey2.currentState.save();
-          String encdata = generateMd5(password);
+      databaseReference
+          .collection("Users")
+          .where("username", isEqualTo: username)
+          .where("password", isEqualTo: encdata)
+          .getDocuments()
+          .then((value) {
+        if (value.documents.length == 0) {
+          Fluttertoast.showToast(
+              msg: "Invalid Credentials",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 14.0);
+        } else {
+          value.documents.forEach((result) {
+            print(value.documents.toString());
 
-        databaseReference
-              .collection("Users")
-              .where("username", isEqualTo: username)
-              .where("password", isEqualTo: encdata)
-              .getDocuments()
-              .then((value) {
-            if (value.documents.length == 0) {
-              Fluttertoast.showToast(
-                  msg: "Invalid Credentials",
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 3,
-                  backgroundColor: Colors.black,
-                  textColor: Colors.white,
-                  fontSize: 14.0);
-
-            }
-            else {
-              value.documents.forEach((result) {
-
-                print(value.documents.toString());
-
-                Fluttertoast.showToast(
-
+            Fluttertoast.showToast(
                     msg: "Login Successful",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     timeInSecForIosWeb: 3,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 14.0).then((value){
-                  Navigator.of(context).pushReplacement(
-                      new MaterialPageRoute(builder: (BuildContext context) => new Preferences()));
-                });
-
-              });
-            }
+                    fontSize: 14.0)
+                .then((value) {
+              Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                  builder: (BuildContext context) => new Preferences()));
+            });
           });
-
-
+        }
+      });
     } else {
       setState(() {
         _autoValidate = true;
@@ -158,14 +149,13 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
       if (value.documents.length == 0) {
         print("encdata " + generateMd5(passwordController.text));
         String encdata = generateMd5(passwordController.text);
-      databaseReference.collection("Users").add(
-            {
-              'name': nameController.text,
-              'email': emailController.text,
-              'mobileno': mobileController.text,
-              'password': encdata,
-              'username': userNameController.text,
-            });
+        databaseReference.collection("Users").add({
+          'name': nameController.text,
+          'email': emailController.text,
+          'mobileno': mobileController.text,
+          'password': encdata,
+          'username': userNameController.text,
+        });
         Fluttertoast.showToast(
             msg: "Registered Successfully",
             toastLength: Toast.LENGTH_LONG,
@@ -174,21 +164,17 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
             backgroundColor: Colors.black,
             textColor: Colors.white,
             fontSize: 14.0);
-
-
+      } else {
+        Fluttertoast.showToast(
+            msg: "UserName Already taken",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 14.0);
       }
-      else
-        {
-          Fluttertoast.showToast(
-              msg: "UserName Already taken",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 14.0);
-        }
-      });
+    });
     _formKey1.currentState.reset();
   }
 
@@ -259,7 +245,6 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                   height: 500.0,
                                   child: new TabBarView(
                                     controller: _tabController,
-
                                     children: <Widget>[
                                       Form(
                                           key: _formKey2,
@@ -392,11 +377,39 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                           ),
                                                           onPressed: () async {
                                                             setState(() {});
-                                                            userLogin(
+                                                            print("email " +
                                                                 userNameControllerLogin
-                                                                    .text,
-                                                                passwordControllerLogin
-                                                                    .text);
+                                                                    .text +
+                                                                " and pass " +
+                                                                generateMd5(
+                                                                    passwordControllerLogin
+                                                                        .text.trim()));
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .signInWithEmailAndPassword(
+                                                                    email:
+                                                                        userNameControllerLogin
+                                                                            .text,
+                                                                    password:
+                                                                        passwordControllerLogin
+                                                                            .text)
+                                                                .then((currentUser) => Firestore
+                                                                    .instance
+                                                                    .collection(
+                                                                        "Users")
+                                                                    .document(
+                                                                        currentUser
+                                                                            .uid)
+                                                                    .get()
+                                                                    .then((DocumentSnapshot
+                                                                            result) =>
+                                                                        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => new Preferences())))
+                                                                    .catchError((err) => print(err)));
+//                                                            userLogin(
+//                                                                userNameControllerLogin
+//                                                                    .text,
+//                                                                passwordControllerLogin
+//                                                                    .text);
                                                           },
                                                         ))))
                                           ])),
@@ -658,34 +671,33 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                         ),
                                                         hintText: '',
                                                         prefixIcon: Padding(
-                                                          padding:
-                                                              const EdgeInsetsDirectional
-                                                                      .only(
-                                                                  start: 3.0,
-                                                                  top: 8.0),
-                                                          child: (passwordController
-                                                              .text ==
-                                                              confirmPasswordController
-                                                                  .text
-                                                              ? Icon(
-                                                            Icons
-                                                                .lock_outline,
-                                                            color: Colors
-                                                                .white,
-                                                            size: 24.0,
-                                                            semanticLabel:
-                                                            'Confirm Password',
-                                                          )
-                                                              : Icon(
-                                                            Icons
-                                                                .lock_open,
-                                                            color: Colors
-                                                                .red,
-                                                            size: 24.0,
-                                                            semanticLabel:
-                                                            'Confirm Password',
-                                                          ))
-                                                        ),
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                        .only(
+                                                                    start: 3.0,
+                                                                    top: 8.0),
+                                                            child: (passwordController
+                                                                        .text ==
+                                                                    confirmPasswordController
+                                                                        .text
+                                                                ? Icon(
+                                                                    Icons
+                                                                        .lock_outline,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 24.0,
+                                                                    semanticLabel:
+                                                                        'Confirm Password',
+                                                                  )
+                                                                : Icon(
+                                                                    Icons
+                                                                        .lock_open,
+                                                                    color: Colors
+                                                                        .red,
+                                                                    size: 24.0,
+                                                                    semanticLabel:
+                                                                        'Confirm Password',
+                                                                  ))),
                                                         contentPadding:
                                                             EdgeInsets.all(2),
                                                         //  <- you can it to 0.0 for no space
@@ -792,35 +804,86 @@ class _LoginState1 extends State<Login1> with SingleTickerProviderStateMixin {
                                                                 fontSize: 16.0),
                                                           ),
                                                           onPressed: () async {
-                                                            bool isvalid =
-                                                                EmailValidator
-                                                                    .validate(
+                                                            FirebaseAuth
+                                                                .instance
+                                                                .createUserWithEmailAndPassword(
+                                                                    email:
                                                                         emailController
-                                                                            .text);
+                                                                            .text,
+                                                                    password:
+                                                                        passwordController
+                                                                            .text)
+                                                                .then((currentUser) => Firestore
+                                                                    .instance
+                                                                    .collection(
+                                                                        "Users")
+                                                                    .document(
+                                                                        currentUser
+                                                                            .uid)
+                                                                    .setData({
+                                                                      'name': nameController
+                                                                          .text,
+                                                                      'email':
+                                                                          emailController
+                                                                              .text,
+                                                                      'mobileno':
+                                                                          mobileController
+                                                                              .text,
+                                                                      'password':
 
-                                                            validateAndSave();
+                                                                              passwordController.text,
+                                                                      'username':
+                                                                          userNameController
+                                                                              .text,
+                                                                    })
+                                                                    .then(
+                                                                        (result) =>
+                                                                            {
+                                                                              print(currentUser.uid),
+//                                                              Navigator.pushAndRemoveUntil(
+//                                                                  context,
+//                                                                  MaterialPageRoute(
+//                                                                      builder: (context) => HomePage(
+//                                                                        title:
+//                                                                        firstNameInputController
+//                                                                            .text +
+//                                                                            "'s Tasks",
+//                                                                        uid: currentUser.uid,
+//                                                                      )),
+//                                                                      (_) => false),
+                                                                              nameController.clear(),
+                                                                              emailController.clear(),
+                                                                              mobileController.clear(),
+                                                                              passwordController.clear(),
+                                                                              userNameController.clear()
+                                                                            })
+                                                                    .catchError(
+                                                                        (err) =>
+                                                                            print(
+                                                                                err)))
+                                                                .catchError(
+                                                                    (err) =>
+                                                                        print(
+                                                                            err));
+
+//                                                            validateAndSave();
                                                           },
                                                         ))))
                                           ])),
                                     ],
-
                                   ),
                                 )
                               ],
                             ),
                           ),
-
                         ],
-                      )
-                      )
+                      ))
                 ]))),
                 decoration: new BoxDecoration(
                   color: const Color(0xff7c94b6),
                   image: new DecorationImage(
-
                     fit: BoxFit.cover,
                     image: AssetImage('assets/sample.gif'),
-
                   ),
                 ),
               ),

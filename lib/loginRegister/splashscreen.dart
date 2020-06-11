@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreenPage>
       coinListInsertionDateTime = new DateTime.now().millisecondsSinceEpoch;
 //      dbCon.syncCurrencyAndCoins(coinListInsertionDateTime);
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (BuildContext context) => new UserProfile()));
+          builder: (BuildContext context) => new Login1()));
     });
   }
 

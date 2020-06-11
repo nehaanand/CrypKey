@@ -35,8 +35,8 @@ dependencies:
   flutter_candlesticks: ^0.1.4
   autocomplete_textfield: ^1.6.4
   flutter_typeahead: ^1.8.1
-
-
+  flutter_tags: ^0.4.8+2
+  firebase_auth: ^0.11.0
 
 dev_dependencies:
   flutter_test:
